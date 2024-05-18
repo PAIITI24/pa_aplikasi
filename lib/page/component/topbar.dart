@@ -18,12 +18,6 @@ AppBar TopBar(BuildContext context,
     actions: (actions.isNotEmpty)
         ? actions
         : [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
-    leading: (lead != null)
-        ? lead
-        : IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.menu)),
+    leading: lead,
   );
 }

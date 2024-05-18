@@ -1,5 +1,6 @@
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:aplikasi/page/component/topbar.dart';
+import 'package:aplikasi/page/sidebar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class _DashboardState extends State<Dashboard> {
     return DefaultTabController(
         length: 3,
         child: Scaffold(
+          drawer: const Sidebar(),
           appBar: TopBar(context,
               title: 'Dashboard',
               tabBar: const TabBar(
