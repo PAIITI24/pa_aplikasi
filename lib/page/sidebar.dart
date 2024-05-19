@@ -49,8 +49,23 @@ class _SidebarState extends State<Sidebar> {
                   onTap: () {},
                 ),
                 ListTile(
-                  title: const Text("Manajemen Obat Data"),
+                  title: const Text("Manajemen Obat"),
                   leading: const Icon(Icons.medication),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text("Manajemen Produk"),
+                  leading: const Icon(Icons.add_box),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text("Membuat Akun Staff"),
+                  leading: const Icon(Icons.person_add),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text("Logout"),
+                  leading: const Icon(Icons.logout),
                   onTap: () {},
                 ),
               ],
