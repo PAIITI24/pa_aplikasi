@@ -76,11 +76,6 @@ class _SidebarState extends State<Sidebar> {
                   leading: const Icon(Icons.person_add),
                   onTap: () {},
                 ),
-                ListTile(
-                  title: const Text("Logout"),
-                  leading: const Icon(Icons.logout),
-                  onTap: () {},
-                ),
               ],
             )));
   }
