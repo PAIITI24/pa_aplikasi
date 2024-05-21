@@ -1,3 +1,5 @@
+import 'package:aplikasi/page/dashboard.dart';
+import 'package:aplikasi/page/laporan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,11 +14,11 @@ class _SidebarState extends State<Sidebar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Drawer(
             clipBehavior: Clip.antiAlias,
             shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(2.5))),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
             child: ListView(
               children: [
                 DrawerHeader(
@@ -39,14 +41,25 @@ class _SidebarState extends State<Sidebar> {
                           )
                         ])),
                 ListTile(
-                  title: const Text("Profile"),
+                  title: const Text("Beranda"),
+                  leading: const Icon(Icons.home),
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const Dashboard()));
+                  },
+                ),
+                ListTile(
+                  title: const Text("Profi"),
                   leading: const Icon(Icons.person_4),
                   onTap: () {},
                 ),
                 ListTile(
                   title: const Text("Laporan"),
                   leading: const Icon(Icons.list_alt),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const Laporan()));
+                  },
                 ),
                 ListTile(
                   title: const Text("Manajemen Obat Data"),

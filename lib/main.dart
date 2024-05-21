@@ -13,16 +13,16 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          textTheme: GoogleFonts.interTextTheme(),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ButtonStyle(
-            alignment: Alignment.center,
-            padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
-            shape: WidgetStatePropertyAll(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-            textStyle: WidgetStatePropertyAll(GoogleFonts.inter()),
-          )),
-          tabBarTheme: TabBarTheme(
+        textTheme: GoogleFonts.interTextTheme(),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+          alignment: Alignment.center,
+          padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
+          shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
+          textStyle: WidgetStatePropertyAll(GoogleFonts.inter()),
+        )),
+        tabBarTheme: TabBarTheme(
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey,
             labelStyle: GoogleFonts.inter(fontWeight: FontWeight.bold),
@@ -30,8 +30,8 @@ class MainApp extends StatelessWidget {
                 GoogleFonts.inter(fontWeight: FontWeight.normal),
             indicator: const BoxDecoration(
               shape: BoxShape.rectangle,
-            ),
-          )),
+            )),
+      ),
       home: const Login(),
     );
   }

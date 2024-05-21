@@ -1,17 +1,18 @@
+import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/topbar.dart';
-import 'package:aplikasi/page/dashboard/obat.dart';
-import 'package:aplikasi/page/dashboard/produk.dart';
+import 'package:aplikasi/page/laporan/obat.dart';
+import 'package:aplikasi/page/laporan/produk.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class Laporan extends StatefulWidget {
+  const Laporan({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<Laporan> createState() => _LaporanState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _LaporanState extends State<Laporan> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -19,21 +20,17 @@ class _DashboardState extends State<Dashboard> {
         child: Scaffold(
           drawer: const Sidebar(),
           appBar: TopBar(context,
-              title: 'Dashboard',
+              title: 'Laporan',
               tabBar: const TabBar(
                 tabs: [
                   Tab(text: 'Obat'),
                   Tab(text: 'Produk'),
                 ],
               )),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              Container(
-                child: PerView(const ObatView()),
-              ),
-              Container(
-                child: PerView(const ProdukView()),
-              ),
+              BoxWithMaxWidth(child: ObatView(), maxWidth: 1000),
+              BoxWithMaxWidth(child: ProdukView(), maxWidth: 1000)
             ],
           ),
         ));

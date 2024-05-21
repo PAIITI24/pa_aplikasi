@@ -36,3 +36,15 @@ class H3 extends StatelessWidget {
         style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold));
   }
 }
+
+class H4 extends StatelessWidget {
+  final String text;
+
+  const H4(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text,
+        style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold));
+  }
+}
