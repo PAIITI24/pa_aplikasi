@@ -1,4 +1,4 @@
-import 'package:aplikasi/functions/logout.dart';
+import 'package:aplikasi/functions/auth/logout.dart';
 import 'package:aplikasi/page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -1,3 +1,4 @@
+import 'package:aplikasi/functions/auth/misc/print.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

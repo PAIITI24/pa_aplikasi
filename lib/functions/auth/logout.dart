@@ -1,3 +1,3 @@
 bool logout() {
-  return false;
+  return true;
 }
