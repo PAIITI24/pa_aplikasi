@@ -1,5 +1,7 @@
 import 'package:aplikasi/page/dashboard.dart';
+import 'package:aplikasi/page/dashboard/obat.dart';
 import 'package:aplikasi/page/laporan.dart';
+import 'package:aplikasi/page/manajemen_obat.dart';
 import 'package:aplikasi/page/profil/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -50,7 +52,7 @@ class _SidebarState extends State<Sidebar> {
                   },
                 ),
                 ListTile(
-                  title: const Text("Profi"),
+                  title: const Text("Profil"),
                   leading: const Icon(Icons.person_4),
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -68,7 +70,10 @@ class _SidebarState extends State<Sidebar> {
                 ListTile(
                   title: const Text("Manajemen Obat"),
                   leading: const Icon(Icons.medication),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const ManajemenObat()));
+                  },
                 ),
                 ListTile(
                   title: const Text("Manajemen Produk"),
