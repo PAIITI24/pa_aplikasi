@@ -1,5 +1,6 @@
 import 'package:aplikasi/page/dashboard.dart';
 import 'package:aplikasi/page/laporan.dart';
+import 'package:aplikasi/page/profil/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -51,7 +52,10 @@ class _SidebarState extends State<Sidebar> {
                 ListTile(
                   title: const Text("Profi"),
                   leading: const Icon(Icons.person_4),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const ProfileView()));
+                  },
                 ),
                 ListTile(
                   title: const Text("Laporan"),
