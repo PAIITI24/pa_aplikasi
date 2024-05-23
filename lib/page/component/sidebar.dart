@@ -1,3 +1,4 @@
+import 'package:aplikasi/page/CreateUser/create.dart';
 import 'package:aplikasi/page/dashboard.dart';
 import 'package:aplikasi/page/dashboard/obat.dart';
 import 'package:aplikasi/page/laporan.dart';
@@ -83,7 +84,10 @@ class _SidebarState extends State<Sidebar> {
                 ListTile(
                   title: const Text("Membuat Akun Staff"),
                   leading: const Icon(Icons.person_add),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const CreateStaffAccountView()));
+                  },
                 ),
               ],
             )));
