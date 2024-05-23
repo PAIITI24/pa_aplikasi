@@ -1,6 +1,7 @@
+import 'package:aplikasi/page/ManajemenObat/daftar.dart';
+import 'package:aplikasi/page/ManajemenObat/daftarKategori.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/topbar.dart';
-import 'package:aplikasi/page/laporan/obat.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
 import 'package:flutter/material.dart';
 
@@ -14,17 +15,26 @@ class ManajemenObat extends StatefulWidget {
 class _ManajemenObatState extends State<ManajemenObat> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const Sidebar(),
-      appBar: TopBar(
-        context,
-        title: 'Manajemen',
-      ),
-      body: const BoxWithMaxWidth(
-        child: ObatView(),
-        maxWidth: 1000,
-      ),
-    );
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          drawer: const Sidebar(),
+          appBar: TopBar(context,
+              title: 'Manajemen Obat',
+              tabBar: const TabBar(
+                tabs: [
+                  Tab(text: 'Obat'),
+                  Tab(text: 'Kategori'),
+                ],
+              )),
+          body: const TabBarView(
+            children: [
+              BoxWithMaxWidth(child: ManagementListObat(), maxWidth: 1000),
+              BoxWithMaxWidth(
+                  child: ManagementListKategoriObat(), maxWidth: 1000)
+            ],
+          ),
+        ));
   }
 
   Widget PerView(Widget child) {

@@ -1,3 +1,5 @@
+import 'package:aplikasi/page/component/constrainedbox.dart';
+import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
 import 'package:aplikasi/page/component/topbar.dart';
@@ -30,37 +32,39 @@ class _CreateStaffAccountViewState extends State<CreateStaffAccountView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(),
-      appBar: TopBar(context, title: "Create Staff Account"),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                'Create Staff Account',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              _buildNameField(),
-              const SizedBox(height: 20),
-              _buildEmailField(),
-              const SizedBox(height: 20),
-              _buildPasswordField(),
-              const SizedBox(height: 20),
-              _buildConfirmPasswordField(),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: _createAccount,
-                child: const Text('Create Account'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        drawer: Sidebar(),
+        appBar: TopBar(context, title: "Create Staff Account"),
+        body: Center(
+          child: BoxWithMaxWidth(
+              maxWidth: 1000,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const H1("Create Staff Account"),
+                    Padding(
+                        padding: const EdgeInsets.all(25),
+                        child: Column(
+                          children: [
+                            _buildNameField(),
+                            const SizedBox(height: 20),
+                            _buildEmailField(),
+                            const SizedBox(height: 20),
+                            _buildPasswordField(),
+                            const SizedBox(height: 20),
+                            _buildConfirmPasswordField(),
+                            const SizedBox(height: 40),
+                            ElevatedButton(
+                              onPressed: _createAccount,
+                              child: const Text('Create Account'),
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
+              )),
+        ));
   }
 
   Widget _buildNameField() {
