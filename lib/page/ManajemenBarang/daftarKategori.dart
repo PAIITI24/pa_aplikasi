@@ -2,39 +2,37 @@ import 'package:aplikasi/page/ManajemenObat/createKategori.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
 
-class ManagementListKategoriObat extends StatefulWidget {
-  const ManagementListKategoriObat({super.key});
+class ManagementListKategoriBarang extends StatefulWidget {
+  const ManagementListKategoriBarang({super.key});
 
   @override
-  State<ManagementListKategoriObat> createState() =>
-      _ManagementListObatKategoriState();
+  State<ManagementListKategoriBarang> createState() => _ManagementListKategoriBarangState();
 }
 
-class _ManagementListObatKategoriState
-    extends State<ManagementListKategoriObat> {
+class _ManagementListKategoriBarangState extends State<ManagementListKategoriBarang> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const H1('Daftar Kategori Obat'),
+          const H1('Daftar Barang'),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const ManagementCreateKategori()));
             },
-            child: const Text('Tambah Kategori Obat'),
+            child: const Text('Tambah Barang'),
           ),
         ]),
         const SizedBox(height: 30),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          summaryItem("Jumlah Kategori", "15"),
+          summaryItem("Jumlah Jenis Barang", "15"),
         ]),
         const SizedBox(height: 40),
         const H2('Tabel Data'),
         const SizedBox(height: 10),
-        TableStokObat()
+        TableStokBarang()
       ],
     );
   }
@@ -58,12 +56,12 @@ class _ManagementListObatKategoriState
             )));
   }
 
-  Widget TableStokObat() {
+  Widget TableStokBarang() {
     return DataTable(
       columns: const [
         DataColumn(
             label: Text(
-          'Nama Kategori',
+          'Nama Barang',
           style: TextStyle(fontWeight: FontWeight.w900),
         )),
         DataColumn(
@@ -84,31 +82,31 @@ class _ManagementListObatKategoriState
       ],
       rows: [
         DataRow(cells: [
-          DataCell(Text('Obat 1')),
+          DataCell(Text('Barang 1')),
           DataCell(Text('100')),
           DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 2')),
+          DataCell(Text('Barang 2')),
           DataCell(Text('200')),
           DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 3')),
+          DataCell(Text('Barang 3')),
           DataCell(Text('300')),
           DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 4')),
+          DataCell(Text('Barang 4')),
           DataCell(Text('400')),
           DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 5')),
+          DataCell(Text('Barang 5')),
           DataCell(Text('500')),
           DataCell(Text('1000')),
           DataCell(Actions(10)),
@@ -122,14 +120,16 @@ class _ManagementListObatKategoriState
       ElevatedButton(
         onPressed: () {},
         style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll<Color?>(Colors.red[900])),
+            backgroundColor:
+                MaterialStateProperty.all<Color?>(Colors.red[900])),
         child: Text("Delete", style: TextStyle(color: Colors.red.shade50)),
       ),
       SizedBox(width: 10),
       ElevatedButton(
         onPressed: () {},
         style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll<Color?>(Colors.amber[900])),
+            backgroundColor:
+                MaterialStateProperty.all<Color?>(Colors.amber[900])),
         child: Text("Edit", style: TextStyle(color: Colors.black)),
       )
     ]);

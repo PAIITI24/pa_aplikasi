@@ -23,7 +23,7 @@ class _DashboardState extends State<Dashboard> {
               tabBar: const TabBar(
                 tabs: [
                   Tab(text: 'Obat'),
-                  Tab(text: 'Produk'),
+                  Tab(text: 'Barang'),
                 ],
               )),
           body: TabBarView(

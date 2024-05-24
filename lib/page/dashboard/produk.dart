@@ -17,7 +17,7 @@ class _ProdukViewState extends State<ProdukView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const H1('Data Stok Produk'),
+        const H1('Data Stok Barang'),
         const SizedBox(height: 5),
         const Divider(),
         const SizedBox(height: 20),
@@ -82,7 +82,7 @@ class _ProdukViewState extends State<ProdukView> {
       columns: const [
         DataColumn(
             label: Text(
-          'Nama Produk',
+          'Nama Barang',
           style: TextStyle(fontWeight: FontWeight.w900),
         )),
         DataColumn(
@@ -98,27 +98,27 @@ class _ProdukViewState extends State<ProdukView> {
       ],
       rows: const [
         DataRow(cells: [
-          DataCell(Text('Produk 1')),
+          DataCell(Text('Barang 1')),
           DataCell(Text('100')),
           DataCell(Text('Rp 10.000')),
         ]),
         DataRow(cells: [
-          DataCell(Text('Produk 2')),
+          DataCell(Text('Barang 2')),
           DataCell(Text('200')),
           DataCell(Text('Rp 20.000')),
         ]),
         DataRow(cells: [
-          DataCell(Text('Produk 3')),
+          DataCell(Text('Barang 3')),
           DataCell(Text('300')),
           DataCell(Text('Rp 30.000')),
         ]),
         DataRow(cells: [
-          DataCell(Text('Produk 4')),
+          DataCell(Text('Barang 4')),
           DataCell(Text('400')),
           DataCell(Text('Rp 40.000')),
         ]),
         DataRow(cells: [
-          DataCell(Text('Produk 5')),
+          DataCell(Text('Barang 5')),
           DataCell(Text('500')),
           DataCell(Text('Rp 50.000')),
         ]),

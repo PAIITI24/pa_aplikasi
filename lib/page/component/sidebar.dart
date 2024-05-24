@@ -1,7 +1,12 @@
+import 'package:aplikasi/page/ManajemenBarang/create.dart';
+import 'package:aplikasi/page/ManajemenBarang/daftar.dart';
+import 'package:aplikasi/page/ManajemenBarang/daftarKategori.dart';
 import 'package:aplikasi/page/create_user.dart';
 import 'package:aplikasi/page/dashboard.dart';
 import 'package:aplikasi/page/dashboard/obat.dart';
+import 'package:aplikasi/page/dashboard/produk.dart';
 import 'package:aplikasi/page/laporan.dart';
+import 'package:aplikasi/page/manajemen_barang.dart';
 import 'package:aplikasi/page/manajemen_obat.dart';
 import 'package:aplikasi/page/profil.dart';
 import 'package:flutter/material.dart';
@@ -77,9 +82,12 @@ class _SidebarState extends State<Sidebar> {
                   },
                 ),
                 ListTile(
-                  title: const Text("Manajemen Produk"),
+                  title: const Text("Manajemen Barang"),
                   leading: const Icon(Icons.add_box),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const ManagementBarang()));
+                  },
                 ),
                 ListTile(
                   title: const Text("Membuat Akun Staff"),
