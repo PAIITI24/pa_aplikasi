@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:aplikasi/page/ManajemenObat/createKategori.dart';
-import 'package:aplikasi/page/ManajemenObat/editKategori.dart'; // Import the ManagementEditObat widget
 
 class ManagementListKategoriObat extends StatefulWidget {
-  const ManagementListKategoriObat({Key? key}) : super(key: key);
+  const ManagementListKategoriObat({super.key});
 
   @override
   State<ManagementListKategoriObat> createState() =>
@@ -13,21 +12,9 @@ class ManagementListKategoriObat extends StatefulWidget {
 
 class _ManagementListKategoriObatState
     extends State<ManagementListKategoriObat> {
-  List<Map<String, String>> _categories = [
-    {
-      'nama': 'Kategori 1',
-      'jumlah': '100',
-      'kategori': 'Kategori A',
-      'tanggal': '2023-12-31',
-      'deskripsi': 'Deskripsi Kategori 1'
-    },
-    {
-      'nama': 'Kategori 2',
-      'jumlah': '200',
-      'kategori': 'Kategori B',
-      'tanggal': '2024-01-15',
-      'deskripsi': 'Deskripsi Kategori 2'
-    },
+  final List<Map<String, String>> _categories = [
+    {'nama': 'Kategori 1', 'jumlah': '100'},
+    {'nama': 'Kategori 2', 'jumlah': '200'},
     // Add more categories here
   ];
 
@@ -75,18 +62,6 @@ class _ManagementListKategoriObatState
     );
   }
 
-  void _editCategory(int index) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ManagementEditObat(
-        namaObat: _categories[index]['nama']!,
-        kategori: _categories[index]['kategori']!,
-        jumlah: int.parse(_categories[index]['jumlah']!),
-        tanggal: _categories[index]['tanggal']!,
-        deskripsi: _categories[index]['deskripsi']!,
-      ),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -116,45 +91,41 @@ class _ManagementListKategoriObatState
 
   Widget summaryItem(String title, String info) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5))),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-        child: Column(
-          children: [
-            H3(title),
-            Text(
-              info,
-              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w900),
-            )
-          ],
-        ),
-      ),
-    );
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+              children: [
+                H3(title),
+                Text(
+                  info,
+                  style: const TextStyle(
+                      fontSize: 48, fontWeight: FontWeight.w900),
+                )
+              ],
+            )));
   }
 
   Widget TableStokObat() {
     return DataTable(
       columns: const [
         DataColumn(
-          label: Text(
-            'Nama Kategori',
-            style: TextStyle(fontWeight: FontWeight.w900),
-          ),
-        ),
+            label: Text(
+          'Nama Kategori',
+          style: TextStyle(fontWeight: FontWeight.w900),
+        )),
         DataColumn(
-          label: Text(
-            'Jumlah',
-            style: TextStyle(fontWeight: FontWeight.w900),
-          ),
-        ),
+            label: Text(
+          'Jumlah',
+          style: TextStyle(fontWeight: FontWeight.w900),
+        )),
         DataColumn(
-          label: Text(
-            'Actions',
-            style: TextStyle(fontWeight: FontWeight.w900),
-          ),
-        ),
+            label: Text(
+          'Actions',
+          style: TextStyle(fontWeight: FontWeight.w900),
+        )),
       ],
       rows: _categories.asMap().entries.map((entry) {
         int index = entry.key;
@@ -162,36 +133,23 @@ class _ManagementListKategoriObatState
         return DataRow(cells: [
           DataCell(Text(category['nama']!)),
           DataCell(Text(category['jumlah']!)),
-          DataCell(Actions(index, _editCategory)),
+          DataCell(Actions(index)),
         ]);
       }).toList(),
     );
   }
 
-  Widget Actions(int index, Function(int) editFunction) {
-    return Row(
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            _showDeleteConfirmationDialog(index);
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color?>(Colors.red[900]),
-          ),
-          child: Text("Delete", style: TextStyle(color: Colors.red.shade50)),
-        ),
-        SizedBox(width: 10),
-        ElevatedButton(
-          onPressed: () {
-            editFunction(index);
-          },
-          style: ButtonStyle(
+  Widget Actions(int index) {
+    return Row(children: [
+      ElevatedButton(
+        onPressed: () {
+          _showDeleteConfirmationDialog(index);
+        },
+        style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all<Color?>(Colors.amber[900]),
-          ),
-          child: Text("Edit", style: TextStyle(color: Colors.black)),
-        )
-      ],
-    );
+                MaterialStateProperty.all<Color?>(Colors.red[900])),
+        child: Text("Delete", style: TextStyle(color: Colors.red.shade50)),
+      ),
+    ]);
   }
 }
