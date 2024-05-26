@@ -1,39 +1,42 @@
+import 'package:aplikasi/page/component/constrainedbox.dart';
+import 'package:aplikasi/page/component/topbar.dart';
 import 'package:flutter/material.dart';
+import 'package:aplikasi/page/component/sidebar.dart';
 
 class ManagementEditKategoriBarang extends StatefulWidget {
-  final String namaBarang;
-  final String kategori;
-  final int jumlah;
-  final String kategoriBarang;
-  final String deskripsi;
+  final int id;
+  final String namaBarang = "test";
+  final String kategori = "Hayoohh";
+  final String jumlah = "123";
+  final String kategoriBarang = "pepek";
+  final String deskripsi = "pepek";
 
   const ManagementEditKategoriBarang({
     Key? key,
-    required this.namaBarang,
-    required this.kategori,
-    required this.jumlah,
-    required this.kategoriBarang,
-    required this.deskripsi,
+    required this.id,
   }) : super(key: key);
 
   @override
-  State<ManagementEditKategoriBarang> createState() => _ManagementEditKategoriBarangState();
+  State<ManagementEditKategoriBarang> createState() =>
+      _ManagementEditKategoriBarangState();
 }
 
-class _ManagementEditKategoriBarangState extends State<ManagementEditKategoriBarang> {
-  late TextEditingController _namaController;
-  late TextEditingController _kategoriController;
-  late TextEditingController _jumlahController;
-  late TextEditingController _kategoriBarangController;
-  late TextEditingController _deskripsiController;
+class _ManagementEditKategoriBarangState
+    extends State<ManagementEditKategoriBarang> {
+  late TextEditingController _namaController = TextEditingController();
+  late TextEditingController _kategoriController = TextEditingController();
+  late TextEditingController _jumlahController = TextEditingController();
+  late TextEditingController _kategoriBarangController =
+      TextEditingController();
+  late TextEditingController _deskripsiController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _namaController = TextEditingController(text: widget.namaBarang);
-    _kategoriController = TextEditingController(text: widget.kategori);
     _jumlahController = TextEditingController(text: widget.jumlah.toString());
-    _kategoriBarangController = TextEditingController(text: widget.kategoriBarang);
+    _kategoriBarangController =
+        TextEditingController(text: widget.kategoriBarang);
     _deskripsiController = TextEditingController(text: widget.deskripsi);
   }
 
@@ -41,7 +44,8 @@ class _ManagementEditKategoriBarangState extends State<ManagementEditKategoriBar
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.tryParse(_kategoriBarangController.text) ?? DateTime.now(),
+      initialDate:
+          DateTime.tryParse(_kategoriBarangController.text) ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
@@ -65,12 +69,11 @@ class _ManagementEditKategoriBarangState extends State<ManagementEditKategoriBar
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Kategori Barang"),
-      ),
+      drawer: Sidebar(),
+      appBar: TopBar(context, title: "Edit Kategori Barang"),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        child: BoxWithMaxWidth(
+          maxWidth: 1000,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

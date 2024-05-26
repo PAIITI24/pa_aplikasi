@@ -1,3 +1,5 @@
+import 'package:aplikasi/page/ManajemenBarang/editKategori.dart';
+import 'package:aplikasi/page/ManajemenObat/createKategori.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/page/ManajemenObat/editKategori.dart';
 import 'package:aplikasi/page/component/titles.dart';
@@ -120,13 +122,7 @@ class _ManagementListKategoriBarangState
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ManagementEditKategori(
-                      id: id,
-                      // Pass the category details to the edit page
-                      nama: _categories[id]['nama']!,
-                      stok: _categories[id]['stok']!,
-                      harga: _categories[id]['harga']!,
-                    )));
+                builder: (context) => ManagementEditKategoriBarang(id: id)));
           },
           style: ButtonStyle(
             backgroundColor:
