@@ -1,3 +1,4 @@
+import 'package:aplikasi/functions/obat/kategori/create.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
 import 'package:aplikasi/page/component/titles.dart';
@@ -13,10 +14,13 @@ class ManagementCreateKategori extends StatefulWidget {
 }
 
 class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
+  final TextEditingController _namaKategoriObatController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(),
+      drawer: const Sidebar(),
       appBar: TopBar(context, title: "Add a Kategori"),
       body: Center(
         child: BoxWithMaxWidth(
@@ -33,15 +37,19 @@ class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
                     padding: const EdgeInsets.all(25),
                     child: Column(
                       children: [
-                        const TextField(
-                          decoration: InputDecoration(
+                        TextField(
+                          controller: _namaKategoriObatController,
+                          decoration: const InputDecoration(
                             labelText: 'Nama Kategori',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: 16.0),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await DoCreateKategori(
+                                context, _namaKategoriObatController.text);
+                          },
                           child: const Text('Simpan'),
                         ),
                       ],
@@ -54,5 +62,28 @@ class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
         ),
       ),
     );
+  }
+
+  Future<void> DoCreateKategori(BuildContext ctx, String nama) async {
+    if (await CreateKategoriObat(nama)) {
+      Navigator.of(context).pop();
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              title: const Text("Tidak dapat menambahkan kategori"),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"))
+              ],
+            );
+          });
+    }
   }
 }

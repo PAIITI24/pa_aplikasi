@@ -5,7 +5,7 @@ import 'package:aplikasi/page/component/topbar.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -38,7 +38,7 @@ class _ProfileViewState extends State<ProfileView> {
                     children: [
                       const H1("User Profile"),
                       Padding(
-                        padding: EdgeInsets.all(25),
+                        padding: const EdgeInsets.all(25),
                         child: Column(children: [
                           TextFormField(
                             decoration: const InputDecoration(

@@ -11,7 +11,7 @@ void main() {
 }
 
 class CreateStaffAccountView extends StatefulWidget {
-  const CreateStaffAccountView({Key? key}) : super(key: key);
+  const CreateStaffAccountView({super.key});
 
   @override
   State<CreateStaffAccountView> createState() => _CreateStaffAccountViewState();
@@ -32,7 +32,7 @@ class _CreateStaffAccountViewState extends State<CreateStaffAccountView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Sidebar(),
+        drawer: const Sidebar(),
         appBar: TopBar(context, title: "Create Staff Account"),
         body: Center(
           child: BoxWithMaxWidth(

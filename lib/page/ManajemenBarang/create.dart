@@ -31,7 +31,7 @@ class _ManagementCreateBarangState extends State<ManagementCreateBarang> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(),
+      drawer: const Sidebar(),
       appBar: TopBar(context, title: "Add an Barang"),
       body: Center(
         child: BoxWithMaxWidth(
@@ -69,7 +69,7 @@ class _ManagementCreateBarangState extends State<ManagementCreateBarang> {
                   controller: _expiredController,
                   decoration: InputDecoration(
                     labelText: 'Tanggal',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.calendar_today),
                       onPressed: () => _selectDate(context),

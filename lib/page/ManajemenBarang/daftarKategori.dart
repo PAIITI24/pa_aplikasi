@@ -82,33 +82,33 @@ class _ManagementListKategoriBarangState extends State<ManagementListKategoriBar
       ],
       rows: [
         DataRow(cells: [
-          DataCell(Text('Barang 1')),
-          DataCell(Text('100')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Barang 1')),
+          const DataCell(Text('100')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Barang 2')),
-          DataCell(Text('200')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Barang 2')),
+          const DataCell(Text('200')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Barang 3')),
-          DataCell(Text('300')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Barang 3')),
+          const DataCell(Text('300')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Barang 4')),
-          DataCell(Text('400')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Barang 4')),
+          const DataCell(Text('400')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Barang 5')),
-          DataCell(Text('500')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Barang 5')),
+          const DataCell(Text('500')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
       ],
@@ -121,16 +121,16 @@ class _ManagementListKategoriBarangState extends State<ManagementListKategoriBar
         onPressed: () {},
         style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all<Color?>(Colors.red[900])),
+                WidgetStateProperty.all<Color?>(Colors.red[900])),
         child: Text("Delete", style: TextStyle(color: Colors.red.shade50)),
       ),
-      SizedBox(width: 10),
+      const SizedBox(width: 10),
       ElevatedButton(
         onPressed: () {},
         style: ButtonStyle(
             backgroundColor:
-                MaterialStateProperty.all<Color?>(Colors.amber[900])),
-        child: Text("Edit", style: TextStyle(color: Colors.black)),
+                WidgetStateProperty.all<Color?>(Colors.amber[900])),
+        child: const Text("Edit", style: TextStyle(color: Colors.black)),
       )
     ]);
   }

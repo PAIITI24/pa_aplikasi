@@ -1,8 +1,6 @@
-import 'package:aplikasi/functions/auth/misc/print.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ObatView extends StatefulWidget {
   const ObatView({super.key});
@@ -25,7 +23,7 @@ class _ObatViewState extends State<ObatView> {
         const H2('Grafik'),
         const SizedBox(height: 20),
         LayoutBuilder(builder: (context, constraints) {
-          return Container(
+          return SizedBox(
               height: 500,
               child: PieChart(PieChartData(
                 pieTouchData: PieTouchData(),

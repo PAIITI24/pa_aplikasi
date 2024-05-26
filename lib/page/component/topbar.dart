@@ -21,8 +21,8 @@ AppBar TopBar(BuildContext context,
         ? actions
         : [
             IconButton(
-                onPressed: () {
-                  if (logout()) {
+                onPressed: () async {
+                  if (await Logout()) {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => const Login()),
@@ -37,7 +37,7 @@ AppBar TopBar(BuildContext context,
                                   borderRadius: BorderRadius.circular(5)),
                               actions: [
                                 TextButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       Navigator.of(ctx).pop();
                                     },
                                     child: const Text("OK"))

@@ -1,7 +1,6 @@
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProdukView extends StatefulWidget {
   const ProdukView({super.key});
@@ -24,7 +23,7 @@ class _ProdukViewState extends State<ProdukView> {
         const H2('Grafik'),
         const SizedBox(height: 20),
         LayoutBuilder(builder: (context, constraints) {
-          return Container(
+          return SizedBox(
               height: 500,
               child: PieChart(PieChartData(
                 pieTouchData: PieTouchData(),

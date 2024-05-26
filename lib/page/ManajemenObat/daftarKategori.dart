@@ -84,33 +84,33 @@ class _ManagementListObatKategoriState
       ],
       rows: [
         DataRow(cells: [
-          DataCell(Text('Obat 1')),
-          DataCell(Text('100')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Obat 1')),
+          const DataCell(Text('100')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 2')),
-          DataCell(Text('200')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Obat 2')),
+          const DataCell(Text('200')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 3')),
-          DataCell(Text('300')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Obat 3')),
+          const DataCell(Text('300')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 4')),
-          DataCell(Text('400')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Obat 4')),
+          const DataCell(Text('400')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
         DataRow(cells: [
-          DataCell(Text('Obat 5')),
-          DataCell(Text('500')),
-          DataCell(Text('1000')),
+          const DataCell(Text('Obat 5')),
+          const DataCell(Text('500')),
+          const DataCell(Text('1000')),
           DataCell(Actions(10)),
         ]),
       ],
@@ -125,12 +125,12 @@ class _ManagementListObatKategoriState
             backgroundColor: WidgetStatePropertyAll<Color?>(Colors.red[900])),
         child: Text("Delete", style: TextStyle(color: Colors.red.shade50)),
       ),
-      SizedBox(width: 10),
+      const SizedBox(width: 10),
       ElevatedButton(
         onPressed: () {},
         style: ButtonStyle(
             backgroundColor: WidgetStatePropertyAll<Color?>(Colors.amber[900])),
-        child: Text("Edit", style: TextStyle(color: Colors.black)),
+        child: const Text("Edit", style: TextStyle(color: Colors.black)),
       )
     ]);
   }

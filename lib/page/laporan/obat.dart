@@ -1,6 +1,5 @@
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ObatView extends StatefulWidget {
   const ObatView({super.key});

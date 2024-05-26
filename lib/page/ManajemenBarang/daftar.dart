@@ -3,7 +3,7 @@ import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
 
 class ManagementListBarang extends StatefulWidget {
-  const ManagementListBarang({Key? key}) : super(key: key);
+  const ManagementListBarang({super.key});
 
   @override
   State<ManagementListBarang> createState() => _ManagementListBarangState();
@@ -95,33 +95,33 @@ Widget TableStokBarang() {
     ],
     rows: [
       DataRow(cells: [
-        DataCell(Text('Barang 1')),
-        DataCell(Text('100')),
-        DataCell(Text('Rp 10.000')),
+        const DataCell(Text('Barang 1')),
+        const DataCell(Text('100')),
+        const DataCell(Text('Rp 10.000')),
         DataCell(Actions(1)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Barang 2')),
-        DataCell(Text('200')),
-        DataCell(Text('Rp 20.000')),
+        const DataCell(Text('Barang 2')),
+        const DataCell(Text('200')),
+        const DataCell(Text('Rp 20.000')),
         DataCell(Actions(2)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Barang 3')),
-        DataCell(Text('300')),
-        DataCell(Text('Rp 30.000')),
+        const DataCell(Text('Barang 3')),
+        const DataCell(Text('300')),
+        const DataCell(Text('Rp 30.000')),
         DataCell(Actions(3)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Barang 4')),
-        DataCell(Text('400')),
-        DataCell(Text('Rp 40.000')),
+        const DataCell(Text('Barang 4')),
+        const DataCell(Text('400')),
+        const DataCell(Text('Rp 40.000')),
         DataCell(Actions(4)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Barang 5')),
-        DataCell(Text('500')),
-        DataCell(Text('Rp 50.000')),
+        const DataCell(Text('Barang 5')),
+        const DataCell(Text('500')),
+        const DataCell(Text('Rp 50.000')),
         DataCell(Actions(5)),
       ]),
     ],
@@ -136,7 +136,7 @@ Widget Actions(int id) {
           // Add your delete logic here
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(Colors.red[900]),
+          backgroundColor: WidgetStateProperty.all<Color?>(Colors.red[900]),
         ),
         child: Text(
           "Delete",
@@ -149,7 +149,7 @@ Widget Actions(int id) {
           // Add your edit logic here
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(Colors.amber[900]),
+          backgroundColor: WidgetStateProperty.all<Color?>(Colors.amber[900]),
         ),
         child: const Text("Edit", style: TextStyle(color: Colors.black)),
       )

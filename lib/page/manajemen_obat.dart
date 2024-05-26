@@ -29,9 +29,10 @@ class _ManajemenObatState extends State<ManajemenObat> {
               )),
           body: const TabBarView(
             children: [
-              BoxWithMaxWidth(child: ManagementListObat(), maxWidth: 1000),
+              BoxWithMaxWidth(maxWidth: 1000, child: ManagementListObat()),
               BoxWithMaxWidth(
-                  child: ManagementListKategoriObat(), maxWidth: 1000)
+                  maxWidth: 1000,
+                  child: ManagementListKategoriObat())
             ],
           ),
         ));

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -53,7 +52,7 @@ Future<void> printReport(BuildContext context) async {
 pw.Widget summaryItem(String title, String info) {
   return pw.Expanded(
     child: pw.Padding(
-      padding: pw.EdgeInsets.all(20),
+      padding: const pw.EdgeInsets.all(20),
       child: pw.Column(
         children: [
           pw.Text(title,

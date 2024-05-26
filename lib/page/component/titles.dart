@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class H1 extends StatelessWidget {
   final String text;
 
-  const H1(this.text);
+  const H1(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class H1 extends StatelessWidget {
 class H2 extends StatelessWidget {
   final String text;
 
-  const H2(this.text);
+  const H2(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class H2 extends StatelessWidget {
 class H3 extends StatelessWidget {
   final String text;
 
-  const H3(this.text);
+  const H3(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class H3 extends StatelessWidget {
 class H4 extends StatelessWidget {
   final String text;
 
-  const H4(this.text);
+  const H4(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {

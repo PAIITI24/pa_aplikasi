@@ -15,7 +15,7 @@ class _ManajementCreateBarangState extends State<ManajementCreateBarang> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(),
+      drawer: const Sidebar(),
       appBar: TopBar(context, title: "Add a Barang"),
       body: Center(
         child: BoxWithMaxWidth(

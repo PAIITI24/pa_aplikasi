@@ -1,10 +1,5 @@
-import 'package:aplikasi/page/ManajemenBarang/create.dart';
-import 'package:aplikasi/page/ManajemenBarang/daftar.dart';
-import 'package:aplikasi/page/ManajemenBarang/daftarKategori.dart';
 import 'package:aplikasi/page/create_user.dart';
 import 'package:aplikasi/page/dashboard.dart';
-import 'package:aplikasi/page/dashboard/obat.dart';
-import 'package:aplikasi/page/dashboard/produk.dart';
 import 'package:aplikasi/page/laporan.dart';
 import 'package:aplikasi/page/manajemen_barang.dart';
 import 'package:aplikasi/page/manajemen_obat.dart';

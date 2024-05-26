@@ -1,4 +1,3 @@
-import 'package:aplikasi/page/ManajemenBarang/create.dart';
 import 'package:aplikasi/page/ManajemenBarang/daftar.dart';
 import 'package:aplikasi/page/ManajemenBarang/daftarKategori.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
@@ -30,9 +29,10 @@ class _ManagementBarangState extends State<ManagementBarang> {
               )),
           body: const TabBarView(
             children: [
-              BoxWithMaxWidth(child: ManagementListBarang(), maxWidth: 1000),
+              BoxWithMaxWidth(maxWidth: 1000, child: ManagementListBarang()),
               BoxWithMaxWidth(
-                  child: ManagementListKategoriBarang(), maxWidth: 1000)
+                  maxWidth: 1000,
+                  child: ManagementListKategoriBarang())
             ],
           ),
         ));

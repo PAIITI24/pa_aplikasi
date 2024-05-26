@@ -29,8 +29,8 @@ class _LaporanState extends State<Laporan> {
               )),
           body: const TabBarView(
             children: [
-              BoxWithMaxWidth(child: ObatView(), maxWidth: 1000),
-              BoxWithMaxWidth(child: ProdukView(), maxWidth: 1000)
+              BoxWithMaxWidth(maxWidth: 1000, child: ObatView()),
+              BoxWithMaxWidth(maxWidth: 1000, child: ProdukView())
             ],
           ),
         ));

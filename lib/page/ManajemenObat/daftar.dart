@@ -85,33 +85,33 @@ Widget TableStokObat() {
     ],
     rows: [
       DataRow(cells: [
-        DataCell(Text('Obat 1')),
-        DataCell(Text('100')),
-        DataCell(Text('Rp 10.000')),
+        const DataCell(Text('Obat 1')),
+        const DataCell(Text('100')),
+        const DataCell(Text('Rp 10.000')),
         DataCell(Actions(1)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Obat 2')),
-        DataCell(Text('200')),
-        DataCell(Text('Rp 20.000')),
+        const DataCell(Text('Obat 2')),
+        const DataCell(Text('200')),
+        const DataCell(Text('Rp 20.000')),
         DataCell(Actions(2)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Obat 3')),
-        DataCell(Text('300')),
-        DataCell(Text('Rp 30.000')),
+        const DataCell(Text('Obat 3')),
+        const DataCell(Text('300')),
+        const DataCell(Text('Rp 30.000')),
         DataCell(Actions(3)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Obat 4')),
-        DataCell(Text('400')),
-        DataCell(Text('Rp 40.000')),
+        const DataCell(Text('Obat 4')),
+        const DataCell(Text('400')),
+        const DataCell(Text('Rp 40.000')),
         DataCell(Actions(4)),
       ]),
       DataRow(cells: [
-        DataCell(Text('Obat 5')),
-        DataCell(Text('500')),
-        DataCell(Text('Rp 50.000')),
+        const DataCell(Text('Obat 5')),
+        const DataCell(Text('500')),
+        const DataCell(Text('Rp 50.000')),
         DataCell(Actions(5)),
       ]),
     ],
@@ -125,18 +125,18 @@ Widget Actions(int id) {
         // Add your delete logic here
       },
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(Colors.red[900])),
+          backgroundColor: WidgetStateProperty.all<Color?>(Colors.red[900])),
       child: Text("Delete", style: TextStyle(color: Colors.red.shade50)),
     ),
-    SizedBox(width: 10),
+    const SizedBox(width: 10),
     ElevatedButton(
       onPressed: () {
         // Add your edit logic here
       },
       style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all<Color?>(Colors.amber[900])),
-      child: Text("Edit", style: TextStyle(color: Colors.black)),
+              WidgetStateProperty.all<Color?>(Colors.amber[900])),
+      child: const Text("Edit", style: TextStyle(color: Colors.black)),
     )
   ]);
 }

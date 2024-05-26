@@ -31,7 +31,7 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(),
+      drawer: const Sidebar(),
       appBar: TopBar(context, title: "Add an Obat"),
       body: Center(
         child: BoxWithMaxWidth(
@@ -74,7 +74,7 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
                           controller: _expiredController,
                           decoration: InputDecoration(
                             labelText: 'Tanggal',
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.calendar_today),
                               onPressed: () => _selectDate(context),
