@@ -1,5 +1,5 @@
 import 'package:aplikasi/page/ManajemenObat/create.dart';
-import 'package:aplikasi/page/ManajemenObat/editKategori.dart';
+import 'package:aplikasi/page/ManajemenObat/edit.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
 

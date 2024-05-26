@@ -2,12 +2,13 @@ import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
+import '../component/titles.dart';
 
 class ManagementEditKategoriBarang extends StatefulWidget {
   final int id;
   final String namaBarang = "test";
   final String kategori = "Hayoohh";
-  final String jumlah = "123";
+  final String jumlah = "123";  
   final String kategoriBarang = "pepek";
   final String deskripsi = "pepek";
 
@@ -78,12 +79,8 @@ class _ManagementEditKategoriBarangState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               // Judul
-              Text(
+              const H1(
                 "Edit Kategori Barang",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
               ),
               SizedBox(height: 25),
               // Form input

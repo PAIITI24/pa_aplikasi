@@ -56,13 +56,6 @@ class _EditBarangState extends State<EditBarang> {
   }
 
   void _updateData() {
-    // Lakukan update data sesuai dengan nilai yang diinputkan
-    String namaObat = _namaController.text;
-    String kategori = _kategoriController.text;
-    int jumlah = int.tryParse(_jumlahController.text) ?? 0;
-    String tanggal = _expiredController.text;
-    String deskripsi = _deskripsiController.text;
-
     // Lakukan proses update data sesuai dengan logika aplikasi Anda
     // Misalnya, mengirim data ke backend untuk update data di database
 

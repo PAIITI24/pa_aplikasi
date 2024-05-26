@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class AuthKey {
   static final _secure_storage = new FlutterSecureStorage();
 
-  static Future<String> GetAuthKey() async {
+  static Future<String> Get() async {
     String? data = await _secure_storage.read(key: "auth_key");
     if (data != null) {
       return data;

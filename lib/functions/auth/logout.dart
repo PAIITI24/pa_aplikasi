@@ -3,7 +3,7 @@ import 'package:aplikasi/functions/shared/securestorage.dart';
 import 'package:http/http.dart' as http;
 
 Future<bool> Logout() async {
-  String? finale = await AuthKey.GetAuthKey();
+  String? finale = await AuthKey.Get();
 
   // ignore: unnecessary_null_comparison
   if (finale != null) {

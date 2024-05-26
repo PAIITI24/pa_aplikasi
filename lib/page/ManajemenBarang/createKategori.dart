@@ -1,3 +1,4 @@
+import 'package:aplikasi/functions/obat/kategori/create.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
 import 'package:aplikasi/page/component/titles.dart';
@@ -12,6 +13,8 @@ class ManajementCreateBarang extends StatefulWidget {
 }
 
 class _ManajementCreateBarangState extends State<ManajementCreateBarang> {
+  final TextEditingController _namaKategori = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,15 +35,18 @@ class _ManajementCreateBarangState extends State<ManajementCreateBarang> {
                     padding: const EdgeInsets.all(25),
                     child: Column(
                       children: [
-                        const TextField(
-                          decoration: InputDecoration(
+                        TextField(
+                          controller: _namaKategori,
+                          decoration: const InputDecoration(
                             labelText: 'Nama Barang',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: 16.0),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            CreateKategoriObat(_namaKategori.text);
+                          },
                           child: const Text('Simpan'),
                         ),
                       ],

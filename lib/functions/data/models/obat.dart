@@ -1,4 +1,5 @@
-// KategoriObat class
+import 'package:intl/intl.dart';
+
 class KategoriObat {
   int? id;
   String? namaKategoriObat;
@@ -14,36 +15,34 @@ class KategoriObat {
     this.obat,
   });
 
-  // Method to parse JSON and create a KategoriObat object
   factory KategoriObat.fromJson(Map<String, dynamic> json) {
+    var obatFromJson = json['obat'] as List?;
+    List<Obat>? obatList = obatFromJson?.map((i) => Obat.fromJson(i)).toList();
+
+    var dateFormat = DateFormat("dd/MM/yyyy");
+
     return KategoriObat(
       id: json['id'],
       namaKategoriObat: json['nama_kategori_obat'],
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'].toString().split('-').reversed.join('-'))
-          : null,
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'].toString().split('-').reversed.join('-'))
-          : null,
-      obat: json['obat'] != null
-          ? (json['obat'] as List).map((i) => Obat.fromJson(i)).toList()
-          : null,
+      createdAt: dateFormat.parse(json['created_at']),
+      updatedAt: dateFormat.parse(json['updated_at']),
+      obat: obatList,
     );
   }
 
-  // Method to convert a KategoriObat object to JSON
   Map<String, dynamic> toJson() {
+    var dateFormat = DateFormat("dd/MM/yyyy");
+
     return {
       'id': id,
       'nama_kategori_obat': namaKategoriObat,
-      'created_at': createdAt?.toString().split(' ')[0].split('-').reversed.join('-'),
-      'updated_at': updatedAt?.toString().split(' ')[0].split('-').reversed.join('-'),
-      'obat': obat?.map((o) => o.toJson()).toList(),
+      'created_at': createdAt == null ? null : dateFormat.format(createdAt!),
+      'updated_at': createdAt == null ? null : dateFormat.format(updatedAt!),
+      'obat': obat?.map((obat) => obat.toJson()).toList(),
     };
   }
 }
 
-// Obat class
 class Obat {
   int? id;
   String? namaObat;
@@ -69,32 +68,30 @@ class Obat {
     this.kategoriObat,
   });
 
-  // Method to parse JSON and create an Obat object
   factory Obat.fromJson(Map<String, dynamic> json) {
+    var dateFormat = DateFormat("dd/MM/yyyy");
+
+    var kategoriObatFromJson = json['kategori'] as List?;
+    List<KategoriObat>? kategoriObatList =
+        kategoriObatFromJson?.map((i) => KategoriObat.fromJson(i)).toList();
+
     return Obat(
       id: json['id'],
       namaObat: json['nama_obat'],
       jumlahStok: json['jumlah_stok'],
       dosisObat: json['dosis_obat'],
       bentukSediaan: json['bentuk_sediaan'],
-      hargaSediaan: json['harga'].toDouble(), // Ensuring float conversion
+      hargaSediaan: json['harga'].toDouble(),
       gambar: json['gambar'],
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'].toString().split('-').reversed.join('-'))
-          : null,
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'].toString().split('-').reversed.join('-'))
-          : null,
-      kategoriObat: json['kategori'] != null
-          ? (json['kategori'] as List)
-              .map((i) => KategoriObat.fromJson(i))
-              .toList()
-          : null,
+      createdAt: dateFormat.parse(json['created_at']),
+      updatedAt: dateFormat.parse(json['updated_at']),
+      kategoriObat: kategoriObatList,
     );
   }
 
-  // Method to convert an Obat object to JSON
   Map<String, dynamic> toJson() {
+    var dateFormat = DateFormat("dd/MM/yyyy");
+
     return {
       'id': id,
       'nama_obat': namaObat,
@@ -103,9 +100,9 @@ class Obat {
       'bentuk_sediaan': bentukSediaan,
       'harga': hargaSediaan,
       'gambar': gambar,
-      'created_at': createdAt?.toString().split(' ')[0].split('-').reversed.join('-'),
-      'updated_at': updatedAt?.toString().split(' ')[0].split('-').reversed.join('-'),
-      'kategori': kategoriObat?.map((k) => k.toJson()).toList(),
+      'created_at': dateFormat.format(createdAt!),
+      'updated_at': dateFormat.format(updatedAt!),
+      'kategori': kategoriObat?.map((kobat) => kobat.toJson()).toList(),
     };
   }
 }

@@ -2,7 +2,6 @@ import 'package:aplikasi/page/component/titles.dart';
 import 'package:aplikasi/page/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/functions/auth/login.dart' as login;
-import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
