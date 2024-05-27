@@ -42,7 +42,7 @@ class _ManagementListKategoriObatState
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const H1('Daftar Kategori Obat'),
+                              const H1('D aftar Kategori Obat'),
                               ElevatedButton(
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(

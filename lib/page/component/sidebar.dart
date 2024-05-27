@@ -1,4 +1,4 @@
-import 'package:aplikasi/page/create_user.dart';
+import 'package:aplikasi/page/daftar_staff.dart';
 import 'package:aplikasi/page/dashboard.dart';
 import 'package:aplikasi/page/laporan.dart';
 import 'package:aplikasi/page/manajemen_barang.dart';
@@ -85,11 +85,11 @@ class _SidebarState extends State<Sidebar> {
                   },
                 ),
                 ListTile(
-                  title: const Text("Membuat Akun Staff"),
+                  title: const Text("Akun Staff"),
                   leading: const Icon(Icons.person_add),
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const CreateStaffAccountView()));
+                        builder: (context) => const ManajemenAkunStaff()));
                   },
                 ),
               ],

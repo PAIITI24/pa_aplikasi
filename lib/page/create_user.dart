@@ -6,18 +6,18 @@ import 'package:aplikasi/page/component/topbar.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: CreateStaffAccountView(),
+    home: BuatAkunStaffView(),
   ));
 }
 
-class CreateStaffAccountView extends StatefulWidget {
-  const CreateStaffAccountView({super.key});
+class BuatAkunStaffView extends StatefulWidget {
+  const BuatAkunStaffView({super.key});
 
   @override
-  State<CreateStaffAccountView> createState() => _CreateStaffAccountViewState();
+  State<BuatAkunStaffView> createState() => _BuatAkunStaffViewState();
 }
 
-class _CreateStaffAccountViewState extends State<CreateStaffAccountView> {
+class _BuatAkunStaffViewState extends State<BuatAkunStaffView> {
   final _formKey = GlobalKey<FormState>();
 
   void _createAccount() {
