@@ -15,7 +15,7 @@ Future<List<KategoriObat>?> ListKategoriObat() async {
         resbody.map((dynamic item) => KategoriObat.fromJson(item)).toList();
 
     return parsedresbody;
+  } else {
+    return null;
   }
-
-  return null;
 }

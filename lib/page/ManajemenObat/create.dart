@@ -1,3 +1,4 @@
+import 'package:aplikasi/functions/data/models/user.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
 import 'package:aplikasi/page/component/titles.dart';
@@ -21,12 +22,16 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
+
     if (picked != null) {
       setState(() {
         _expiredController.text = "${picked.toLocal()}".split(' ')[0];
       });
     }
   }
+
+  List<User> input = [];
+  int cId = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +60,7 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
                           ),
                         ),
                         const SizedBox(height: 16.0),
-                        const TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Kategori',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
+//                        ListView.builder(itemBuilder: ),
                         const SizedBox(height: 16.0),
                         const TextField(
                           decoration: InputDecoration(

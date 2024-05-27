@@ -42,6 +42,7 @@ class _LoginState extends State<Login> {
                     const SizedBox(height: 20),
                     TextField(
                         controller: _passwordInputController,
+                        obscureText: true,
                         decoration: const InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(),
@@ -74,8 +75,7 @@ class _LoginState extends State<Login> {
             context: context,
             builder: (ctx) => AlertDialog(
                   title: const Text("Gagal masuk"),
-                  content: const Text(
-                      "Periksa alamat surel, katasandi anda"),
+                  content: const Text("Periksa alamat surel, katasandi anda"),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)),
                   actions: [
@@ -93,8 +93,7 @@ class _LoginState extends State<Login> {
           context: context,
           builder: (ctx) => AlertDialog(
                 title: const Text("Tidak dapat terhubung dengan jaringan"),
-                content: const Text(
-                    "Mohon periksa koneksi anda"),
+                content: const Text("Mohon periksa koneksi anda"),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 actions: [

@@ -1,7 +1,8 @@
+import 'package:aplikasi/page/ManajemenStaff/daftar_staff.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
 import 'package:aplikasi/page/component/topbar.dart';
-import 'package:aplikasi/page/create_user.dart';
+import 'package:aplikasi/page/ManajemenStaff/create_staff.dart';
 import 'package:flutter/material.dart';
 
 class ManajemenAkunStaff extends StatefulWidget {
@@ -26,21 +27,21 @@ class _ManajemenAkunStaffState extends State<ManajemenAkunStaff> {
                   Tab(text: 'Tambah Akun Staff'),
                 ],
               )),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              BoxWithMaxWidth(maxWidth: 1000, child: Center(child: Text("Placeholder"),)),
               BoxWithMaxWidth(
-                  maxWidth: 1000,
-                  child: BuatAkunStaffView())
+                  maxWidth: 1000, child: PerView(const DaftarStaff())),
+              BoxWithMaxWidth(
+                  maxWidth: 1000, child: PerView(const BuatAkunStaffView()))
             ],
           ),
         ));
   }
 
-    Widget PerView(Widget child) {
+  Widget PerView(Widget child) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(50),
+        padding: const EdgeInsets.all(0),
         child: child,
       ),
     );

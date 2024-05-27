@@ -1,4 +1,4 @@
-import 'package:aplikasi/page/daftar_staff.dart';
+import 'package:aplikasi/page/manajemen_staff.dart';
 import 'package:aplikasi/page/dashboard.dart';
 import 'package:aplikasi/page/laporan.dart';
 import 'package:aplikasi/page/manajemen_barang.dart';
