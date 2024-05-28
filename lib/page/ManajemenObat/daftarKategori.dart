@@ -45,9 +45,13 @@ class _ManagementListKategoriObatState
                               const H1('D aftar Kategori Obat'),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ManagementCreateKategori()));
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ManagementCreateKategori()))
+                                      .then((val) {
+                                    setState(() {});
+                                  });
                                 },
                                 child: const Text('Tambah Kategori Obat'),
                               ),
@@ -143,7 +147,7 @@ class _ManagementListKategoriObatState
   Widget Actions(int id) {
     return Row(
       children: [
-        ElevatedButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(
@@ -161,7 +165,7 @@ class _ManagementListKategoriObatState
           child: Text("Edit", style: TextStyle(color: Colors.black)),
         ),
         const SizedBox(width: 10),
-        ElevatedButton(
+        TextButton(
           onPressed: () {
             _showDeleteConfirmationDialog(id);
           },

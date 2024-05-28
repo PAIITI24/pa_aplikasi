@@ -1,3 +1,3 @@
 class URLAplikasi {
-  static String API = "http://127.0.0.1:3003";
+  static String API = "http://localhost:3003 ";
 }

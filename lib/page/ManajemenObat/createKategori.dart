@@ -66,7 +66,7 @@ class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
 
   Future<void> DoCreateKategori(BuildContext ctx, String nama) async {
     if (await CreateKategoriObat(nama)) {
-      Navigator.of(context).pop();
+      Navigator.of(context).pop("reload pls");
     } else {
       showDialog(
           context: context,

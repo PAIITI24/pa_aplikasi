@@ -1,7 +1,10 @@
+import 'package:aplikasi/functions/data/models/obat.dart';
+import 'package:aplikasi/functions/obat/list.dart';
 import 'package:aplikasi/page/ManajemenObat/create.dart';
 import 'package:aplikasi/page/ManajemenObat/edit.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ManagementListObat extends StatefulWidget {
   const ManagementListObat({super.key});
@@ -11,26 +14,6 @@ class ManagementListObat extends StatefulWidget {
 }
 
 class _ManagementListObatState extends State<ManagementListObat> {
-  final List<Map<String, dynamic>> _medicines = [
-    {
-      'nama': 'Obat 1',
-      'kategori': 'Kategori 1',
-      'jumlah': 100,
-      'tanggal': '2024-12-31',
-      'deskripsi': 'Deskripsi Obat 1',
-      'harga': 'Rp 10.000',
-    },
-    {
-      'nama': 'Obat 2',
-      'kategori': 'Kategori 2',
-      'jumlah': 200,
-      'tanggal': '2024-11-30',
-      'deskripsi': 'Deskripsi Obat 2',
-      'harga': 'Rp 20.000',
-    },
-    // Add more medicines here
-  ];
-
   void _showDeleteConfirmationDialog(int index) {
     showDialog(
       context: context,
@@ -55,12 +38,7 @@ class _ManagementListObatState extends State<ManagementListObat> {
               child: const Text('Cancel', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
-              onPressed: () {
-                setState(() {
-                  _medicines.removeAt(index); // Remove the item
-                });
-                Navigator.of(context).pop(); // Close the dialog
-              },
+              onPressed: () {},
               child:
                   const Text('Delete', style: TextStyle(color: Colors.white)),
               style: TextButton.styleFrom(
@@ -75,6 +53,39 @@ class _ManagementListObatState extends State<ManagementListObat> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: ListObat(),
+        builder: (BuildContext ctx, AsyncSnapshot<List<Obat>?> snp) {
+          switch (snp.connectionState) {
+            case ConnectionState.waiting:
+              {
+                return const Center(child: CircularProgressIndicator());
+              }
+            case ConnectionState.done:
+              {
+                if (snp.data == null) {
+                  return const Center(
+                      child: Text("Mohon periksa koneksi internet anda"));
+                } else {
+                  return _body(snp.data!);
+                }
+              }
+            default:
+              {
+                return const Center(
+                  child: Text(
+                      "Tolong perbarui halaman ini dengan membuka halaman lain dan membuka halaman ini kembali"),
+                );
+              }
+          }
+        });
+  }
+
+  Widget _body(List<Obat> dataObat) {
+    int totalStok = dataObat
+        .map((x) => x.jumlahStok!)
+        .reduce((value, element) => value + element);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -82,21 +93,27 @@ class _ManagementListObatState extends State<ManagementListObat> {
           const H1('Daftar Obat'),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ManagementCreateObat()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                      builder: (context) => const ManagementCreateObat()))
+                  .then((msg) {
+                if (msg == "reload pls") {
+                  setState(() {});
+                }
+              });
             },
             child: const Text('Tambah Obat'),
           ),
         ]),
         const SizedBox(height: 30),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          summaryItem("Jumlah Jenis Obat", "15"),
-          summaryItem("Jumlah Obat", "78"),
+          summaryItem("Jumlah Jenis Obat", "${dataObat.length}"),
+          summaryItem("Jumlah Obat", "$totalStok"),
         ]),
         const SizedBox(height: 40),
         const H2('Tabel Data'),
         const SizedBox(height: 10),
-        TableStokObat(context)
+        TableStokObat(dataObat)
       ],
     );
   }
@@ -122,45 +139,84 @@ class _ManagementListObatState extends State<ManagementListObat> {
     ));
   }
 
-  Widget TableStokObat(BuildContext context) {
-    return DataTable(
-      columns: const [
-        DataColumn(
-            label: Text(
-          'Nama Obat',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-        DataColumn(
-            label: Text(
-          'Stok',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-        DataColumn(
-            label: Text(
-          'Harga',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-        DataColumn(
-            label: Text(
-          'Aksi',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-      ],
-      rows: _medicines.asMap().entries.map((entry) {
-        int index = entry.key;
-        Map<String, dynamic> medicine = entry.value;
-        return DataRow(cells: [
-          DataCell(Text(medicine['nama'])),
-          DataCell(Text(medicine['jumlah'].toString())),
-          DataCell(Text(medicine['harga'])),
-          DataCell(Actions(context, index)),
-        ]);
-      }).toList(),
-    );
+  Widget TableStokObat(List<Obat> dataObat) {
+    var sW = MediaQuery.of(context).size.width;
+
+    return Padding(
+        padding: EdgeInsets.only(top: 30),
+        child: Column(
+          children: List.generate(dataObat.length, (i) {
+            return Card(
+                margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.symmetric(horizontal: 25),
+                            width: sW * 0.15,
+                            height: sW * 0.25,
+                            child: Image.network(
+                              dataObat[i].gambar!,
+                            )),
+                        Padding(
+                            padding: EdgeInsets.symmetric(vertical: 30),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                H2(dataObat[i].namaObat!),
+                                Row(
+                                    children: List.generate(
+                                        dataObat[i].kategoriObat!.length, (ii) {
+                                  return Padding(
+                                      padding: EdgeInsets.only(right: 5),
+                                      child: Badge(
+                                        label: Text(dataObat[i]
+                                            .kategoriObat![ii]
+                                            .namaKategoriObat!),
+                                        backgroundColor: Colors.blue.shade400,
+                                      ));
+                                })),
+                                info("Jumlah Stok",
+                                    "${dataObat[i].jumlahStok!}"),
+                                info("Bentuk Sediaan",
+                                    "${dataObat[i].bentukSediaan!}"),
+                                info("Dosis", "${dataObat[i].dosisObat!}"),
+                                info(
+                                    "Harga", "Rp ${dataObat[i].hargaSediaan!}"),
+                                SizedBox(height: 20),
+                                Actions(context, i)
+                              ],
+                            ))
+                      ],
+                    )));
+          }),
+        ));
+  }
+
+  Widget info(String ttl, String info) {
+    return Container(
+        child: Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            ttl,
+          ),
+          Text(info,
+              softWrap: true,
+              style:
+                  GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold))
+        ],
+      ),
+    ));
   }
 
   Widget Actions(BuildContext context, int index) {
-    Map<String, dynamic> medicine = _medicines[index];
     return Row(children: [
       ElevatedButton(
         onPressed: () {
@@ -173,79 +229,12 @@ class _ManagementListObatState extends State<ManagementListObat> {
       ),
       SizedBox(width: 10),
       ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ManagementEditObat(
-                  namaObat: medicine['nama'],
-                  kategori: medicine['kategori'],
-                  jumlah: medicine['jumlah'],
-                  tanggal: medicine['tanggal'],
-                  deskripsi: medicine['deskripsi'])));
-        },
+        onPressed: () {},
         style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all<Color?>(Colors.amber[900])),
         child: Text("Edit", style: TextStyle(color: Colors.black)),
       )
     ]);
-  }
-
-  Widget nTableStokObat() {
-    return DataTable(
-      columns: const [
-        DataColumn(
-            label: Text(
-          'Nama Obat',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-        DataColumn(
-            label: Text(
-          'Stok',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-        DataColumn(
-            label: Text(
-          'Harga',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-        DataColumn(
-            label: Text(
-          'Aksi',
-          style: TextStyle(fontWeight: FontWeight.w900),
-        )),
-      ],
-      rows: [
-        DataRow(cells: [
-          const DataCell(Text('Obat 1')),
-          const DataCell(Text('100')),
-          const DataCell(Text('Rp 10.000')),
-          DataCell(Actions(context, 1)),
-        ]),
-        DataRow(cells: [
-          const DataCell(Text('Obat 2')),
-          const DataCell(Text('200')),
-          const DataCell(Text('Rp 20.000')),
-          DataCell(Actions(context, 2)),
-        ]),
-        DataRow(cells: [
-          const DataCell(Text('Obat 3')),
-          const DataCell(Text('300')),
-          const DataCell(Text('Rp 30.000')),
-          DataCell(Actions(context, 3)),
-        ]),
-        DataRow(cells: [
-          const DataCell(Text('Obat 4')),
-          const DataCell(Text('400')),
-          const DataCell(Text('Rp 40.000')),
-          DataCell(Actions(context, 4)),
-        ]),
-        DataRow(cells: [
-          const DataCell(Text('Obat 5')),
-          const DataCell(Text('500')),
-          const DataCell(Text('Rp 50.000')),
-          DataCell(Actions(context, 5)),
-        ]),
-      ],
-    );
   }
 }

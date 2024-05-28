@@ -100,8 +100,8 @@ class Obat {
       'bentuk_sediaan': bentukSediaan,
       'harga': hargaSediaan,
       'gambar': gambar,
-      'created_at': dateFormat.format(createdAt!),
-      'updated_at': dateFormat.format(updatedAt!),
+      'created_at': createdAt == null ? null : dateFormat.format(createdAt!),
+      'updated_at': updatedAt == null ? null : dateFormat.format(updatedAt!),
       'kategori': kategoriObat?.map((kobat) => kobat.toJson()).toList(),
     };
   }
