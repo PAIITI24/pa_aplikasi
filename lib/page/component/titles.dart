@@ -20,8 +20,13 @@ class H2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,
-        style: GoogleFonts.inter(fontSize: 28, fontWeight: FontWeight.bold));
+    return Text(
+      text,
+      style: GoogleFonts.inter(fontSize: 28, fontWeight: FontWeight.bold),
+      softWrap: true,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 }
 

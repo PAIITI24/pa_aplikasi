@@ -25,25 +25,25 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
   final TextEditingController _bentukSediaanController =
       TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
-  final TextEditingController _expiredController = TextEditingController();
+//  final TextEditingController _expiredController = TextEditingController();
 
   String? _selectedFileName;
   PlatformFile? _selectedFile;
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
 
-    if (picked != null) {
-      setState(() {
-        _expiredController.text = DateFormat("MM/dd/yyyy").format(picked);
-      });
-    }
-  }
+  //   if (picked != null) {
+  //     setState(() {
+  //       _expiredController.text = DateFormat("MM/dd/yyyy").format(picked);
+  //     });
+  //   }
+  // }
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -152,19 +152,19 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
                       ),
                       keyboardType: TextInputType.number,
                     ),
-                    const SizedBox(height: 16.0),
-                    TextField(
-                      controller: _expiredController,
-                      decoration: InputDecoration(
-                        labelText: 'Tanggal',
-                        border: const OutlineInputBorder(),
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () => _selectDate(context),
-                        ),
-                      ),
-                      readOnly: true,
-                    ),
+                    // const SizedBox(height: 16.0),
+                    // TextField(
+                    //   controller: _expiredController,
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Tanggal',
+                    //     border: const OutlineInputBorder(),
+                    //     suffixIcon: IconButton(
+                    //       icon: const Icon(Icons.calendar_today),
+                    //       onPressed: () => _selectDate(context),
+                    //     ),
+                    //   ),
+                    //   readOnly: true,
+                    // ),
                     const SizedBox(height: 16.0),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,7 +314,6 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
     final dosis = _dosisController.text;
     final bentukSediaan = _bentukSediaanController.text;
     final harga = _hargaController.text;
-    final expired = _expiredController.text;
 
     if (_selectedFile == null) {
       // Handle error - no file selected

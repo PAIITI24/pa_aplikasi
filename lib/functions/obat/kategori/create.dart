@@ -6,7 +6,10 @@ import "package:http/http.dart" as http;
 
 Future<bool> CreateKategoriObat(String nama_kategori) async {
   try {
-    var req = await http.post(Uri.parse("${URLAplikasi.API}/obat/kategori/"),
+    var req = await http.post(
+        Uri.parse(
+          "${URLAplikasi.API}/obat/kategori/",
+        ),
         headers: {
           'Authorization': await AuthKey.Get(),
           'Content-Type': 'application/json'

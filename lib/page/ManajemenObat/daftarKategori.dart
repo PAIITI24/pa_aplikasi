@@ -31,7 +31,7 @@ class _ManagementListKategoriObatState
 
             case ConnectionState.done:
               {
-                if (snapshot.hasError) {
+                if (snapshot.data == null) {
                   print(snapshot.hasError);
                   return const Center(
                       child: Text("Mohon periksa koneksi internet anda"));
@@ -42,7 +42,7 @@ class _ManagementListKategoriObatState
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const H1('D aftar Kategori Obat'),
+                              const H1('Daftar Kategori Obat'),
                               ElevatedButton(
                                 onPressed: () {
                                   Navigator.of(context)
@@ -60,13 +60,13 @@ class _ManagementListKategoriObatState
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              summaryItem("Jumlah Jenis Barang",
+                              summaryItem("Jumlah Jenis kategori",
                                   snapshot.data!.length.toString()),
                             ]),
                         const SizedBox(height: 40),
                         const H2('Tabel Data'),
                         const SizedBox(height: 10),
-                        TableStokBarang(snapshot.data!)
+                        TableDaftarKategori(snapshot.data!)
                       ]);
                 }
               }
@@ -106,20 +106,20 @@ class _ManagementListKategoriObatState
     );
   }
 
-  Widget TableStokBarang(List<KategoriObat> data) {
+  Widget TableDaftarKategori(List<KategoriObat> data) {
     DateFormat format = DateFormat("dd/MM/yyyy");
 
     return DataTable(
       columns: const [
         DataColumn(
           label: Text(
-            'Nama Barang',
+            'Nama Kategori',
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
         ),
         DataColumn(
           label: Text(
-            'Stok',
+            'Tanggal Dibuat',
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
         ),
@@ -162,7 +162,7 @@ class _ManagementListKategoriObatState
             backgroundColor:
                 MaterialStateProperty.all<Color?>(Colors.amber[900]),
           ),
-          child: Text("Edit", style: TextStyle(color: Colors.black)),
+          child: const Text("Edit", style: TextStyle(color: Colors.black)),
         ),
         const SizedBox(width: 10),
         TextButton(
@@ -193,7 +193,7 @@ class _ManagementListKategoriObatState
             style: TextStyle(color: Colors.red),
           ),
           content: const Text(
-            'Apakah Anda yakin ingin menghapus barang ini?',
+            'Apakah Anda yakin ingin menghapus kategori ini?',
             style: TextStyle(color: Colors.red),
           ),
           actions: <Widget>[

@@ -19,3 +19,10 @@ Future<List<Obat>?> ListObat() async {
     return null;
   }
 }
+
+void main() {
+  () async {
+    await ListObat();
+  }()
+      .then((x) => print(x));
+}

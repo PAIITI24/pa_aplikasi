@@ -21,7 +21,7 @@ class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const Sidebar(),
-      appBar: TopBar(context, title: "Add a Kategori"),
+      appBar: TopBar(context, title: "Menambahkan Kategori"),
       body: Center(
         child: BoxWithMaxWidth(
           maxWidth: 1000,
@@ -32,7 +32,7 @@ class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const H1("Create Kategori"),
+                  const H1("Menambahkan Kategori"),
                   Padding(
                     padding: const EdgeInsets.all(25),
                     child: Column(
@@ -45,12 +45,25 @@ class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
                           ),
                         ),
                         const SizedBox(height: 16.0),
-                        ElevatedButton(
-                          onPressed: () async {
-                            await DoCreateKategori(
-                                context, _namaKategoriObatController.text);
-                          },
-                          child: const Text('Simpan'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 16.0),
+                            ElevatedButton(
+                              onPressed: () async {
+                                await DoCreateKategori(
+                                    context, _namaKategoriObatController.text);
+                              },
+                              child: const Text('Simpan'),
+                            ),
+                            const SizedBox(width: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Kembali'),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -74,9 +87,9 @@ class _ManagementCreateKategoriState extends State<ManagementCreateKategori> {
             return AlertDialog(
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5))),
-              title: const Text("Tidak dapat menambahkan kategori"),
+              content: const Text("Tidak dapat menambahkan kategori"),
               actions: [
-                ElevatedButton(
+                TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
