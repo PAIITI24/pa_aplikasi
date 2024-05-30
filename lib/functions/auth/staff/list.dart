@@ -6,9 +6,10 @@ import 'package:aplikasi/functions/shared/securestorage.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<User>?> GetListStaff() async {
+  var key = await AuthKey().Get();
   var request =
       await http.get(Uri.parse("${URLAplikasi.API}/user/list"), headers: {
-    "Authorization": await AuthKey.Get(),
+    "Authorization": key,
   });
 
   print(request.statusCode);

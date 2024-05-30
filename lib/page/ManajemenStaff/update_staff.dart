@@ -1,4 +1,4 @@
-import 'package:aplikasi/functions/auth/staff/get.dart';
+import 'package:aplikasi/functions/auth/get.dart';
 import 'package:aplikasi/functions/auth/staff/update.dart';
 import 'package:aplikasi/functions/data/models/user.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
@@ -30,7 +30,7 @@ class _UpdateStaffState extends State<UpdateStaff> {
         drawer: Sidebar(),
         appBar: TopBar(context, title: "Ubah data pengguna"),
         body: FutureBuilder(
-            future: GetAkuntStaffInfo(id),
+            future: GetAkuntInfo(id),
             builder: (BuildContext ctx, AsyncSnapshot<User?> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:

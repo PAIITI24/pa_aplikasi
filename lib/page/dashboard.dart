@@ -1,3 +1,4 @@
+import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/topbar.dart';
 import 'package:aplikasi/page/dashboard/obat.dart';
 import 'package:aplikasi/page/dashboard/produk.dart';
@@ -29,11 +30,12 @@ class _DashboardState extends State<Dashboard> {
           body: TabBarView(
             children: [
               Container(
-                child: PerView(const ObatView()),
+                child: BoxWithMaxWidth(
+                    maxWidth: 1000, child: PerView(const ObatView())),
               ),
               Container(
-                child: PerView(const ProdukView()),
-              ),
+                  child: BoxWithMaxWidth(
+                      maxWidth: 1000, child: PerView(const ProdukView()))),
             ],
           ),
         ));

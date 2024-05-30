@@ -1,3 +1,4 @@
+import 'package:aplikasi/functions/barang/kategori/create.dart';
 import 'package:aplikasi/functions/obat/kategori/create.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
 import 'package:aplikasi/page/component/sidebar.dart';
@@ -5,21 +6,24 @@ import 'package:aplikasi/page/component/titles.dart';
 import 'package:aplikasi/page/component/topbar.dart';
 import 'package:flutter/material.dart';
 
-class ManajementCreateBarang extends StatefulWidget {
-  const ManajementCreateBarang({super.key});
+class ManagementCreateKategoriBarang extends StatefulWidget {
+  const ManagementCreateKategoriBarang({super.key});
 
   @override
-  State<ManajementCreateBarang> createState() => _ManajementCreateBarangState();
+  State<ManagementCreateKategoriBarang> createState() =>
+      _ManagementCreateKategoriBarangState();
 }
 
-class _ManajementCreateBarangState extends State<ManajementCreateBarang> {
-  final TextEditingController _namaKategori = TextEditingController();
+class _ManagementCreateKategoriBarangState
+    extends State<ManagementCreateKategoriBarang> {
+  final TextEditingController _namaKategoriBarangController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const Sidebar(),
-      appBar: TopBar(context, title: "Add a Barang"),
+      appBar: TopBar(context, title: "Menambahkan Kategori"),
       body: Center(
         child: BoxWithMaxWidth(
           maxWidth: 1000,
@@ -30,24 +34,38 @@ class _ManajementCreateBarangState extends State<ManajementCreateBarang> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const H1("Create Barang"),
+                  const H1("Menambahkan Kategori"),
                   Padding(
                     padding: const EdgeInsets.all(25),
                     child: Column(
                       children: [
                         TextField(
-                          controller: _namaKategori,
+                          controller: _namaKategoriBarangController,
                           decoration: const InputDecoration(
-                            labelText: 'Nama Barang',
+                            labelText: 'Nama Kategori',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         const SizedBox(height: 16.0),
-                        ElevatedButton(
-                          onPressed: () async {
-                            CreateKategoriObat(_namaKategori.text);
-                          },
-                          child: const Text('Simpan'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 16.0),
+                            ElevatedButton(
+                              onPressed: () async {
+                                await DoCreateKategori(context,
+                                    _namaKategoriBarangController.text);
+                              },
+                              child: const Text('Simpan'),
+                            ),
+                            const SizedBox(width: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Kembali'),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -59,5 +77,28 @@ class _ManajementCreateBarangState extends State<ManajementCreateBarang> {
         ),
       ),
     );
+  }
+
+  Future<void> DoCreateKategori(BuildContext ctx, String nama) async {
+    if (await CreateKategoriBarang(nama)) {
+      Navigator.of(context).pop("reload pls");
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              content: const Text("Tidak dapat menambahkan kategori"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"))
+              ],
+            );
+          });
+    }
   }
 }

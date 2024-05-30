@@ -10,7 +10,7 @@ Future<bool> CreateAkunStaff(String name, String email, String password) async {
       jsonEncode(User(name: name, email: email, password: password).toJson());
   var request = await http.post(Uri.parse("${URLAplikasi.API}/user/signup"),
       headers: {
-        "Authorization": await AuthKey.Get(),
+        "Authorization": await AuthKey().Get(),
         "Content-Type": "application/json"
       },
       body: body);

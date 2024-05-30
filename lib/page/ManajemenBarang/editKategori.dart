@@ -1,150 +1,149 @@
+import 'package:aplikasi/functions/barang/kategori/get.dart';
+import 'package:aplikasi/functions/barang/kategori/update.dart';
+import 'package:aplikasi/functions/data/models/barang.dart';
+import 'package:aplikasi/functions/data/models/obat.dart';
+import 'package:aplikasi/functions/obat/kategori/get.dart';
+import 'package:aplikasi/functions/obat/kategori/update.dart';
 import 'package:aplikasi/page/component/constrainedbox.dart';
+import 'package:aplikasi/page/component/sidebar.dart';
+import 'package:aplikasi/page/component/titles.dart';
 import 'package:aplikasi/page/component/topbar.dart';
 import 'package:flutter/material.dart';
-import 'package:aplikasi/page/component/sidebar.dart';
-import '../component/titles.dart';
 
 class ManagementEditKategoriBarang extends StatefulWidget {
   final int id;
-  final String namaBarang = "test";
-  final String kategori = "Hayoohh";
-  final String jumlah = "123";  
-  final String kategoriBarang = "pepek";
-  final String deskripsi = "pepek";
 
   const ManagementEditKategoriBarang({
     Key? key,
     required this.id,
-  }) : super(key: key);
+  });
 
   @override
   State<ManagementEditKategoriBarang> createState() =>
-      _ManagementEditKategoriBarangState();
+      _ManagementEditKategoriBarangState(id: id);
 }
 
 class _ManagementEditKategoriBarangState
     extends State<ManagementEditKategoriBarang> {
-  late TextEditingController _namaController = TextEditingController();
-  late TextEditingController _kategoriController = TextEditingController();
-  late TextEditingController _jumlahController = TextEditingController();
-  late TextEditingController _kategoriBarangController =
-      TextEditingController();
-  late TextEditingController _deskripsiController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _namaController = TextEditingController(text: widget.namaBarang);
-    _jumlahController = TextEditingController(text: widget.jumlah.toString());
-    _kategoriBarangController =
-        TextEditingController(text: widget.kategoriBarang);
-    _deskripsiController = TextEditingController(text: widget.deskripsi);
-  }
+  final int id;
 
-  // Method untuk memilih tanggal
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate:
-          DateTime.tryParse(_kategoriBarangController.text) ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      setState(() {
-        _kategoriBarangController.text = "${picked.toLocal()}".split(' ')[0];
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _namaController.dispose();
-    _kategoriController.dispose();
-    _jumlahController.dispose();
-    _kategoriBarangController.dispose();
-    _deskripsiController.dispose();
-    super.dispose();
-  }
+  _ManagementEditKategoriBarangState({required this.id});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Sidebar(),
-      appBar: TopBar(context, title: "Edit Kategori Barang"),
-      body: Center(
-        child: BoxWithMaxWidth(
-          maxWidth: 1000,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Judul
-              const H1(
-                "Edit Kategori Barang",
-              ),
-              SizedBox(height: 25),
-              // Form input
-              Column(
-                children: [
-                  TextField(
-                    controller: _namaController,
-                    decoration: InputDecoration(
-                      labelText: 'Nama Barang',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    controller: _kategoriController,
-                    decoration: InputDecoration(
-                      labelText: 'Kategori',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    controller: _jumlahController,
-                    decoration: InputDecoration(
-                      labelText: 'Jumlah',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    controller: _kategoriBarangController,
-                    decoration: InputDecoration(
-                      labelText: 'Kategori Barang',
-                      border: OutlineInputBorder(),
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () => _selectDate(context),
-                      ),
-                    ),
-                    readOnly: true,
-                  ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    controller: _deskripsiController,
-                    decoration: InputDecoration(
-                      labelText: 'Deskripsi',
-                      border: OutlineInputBorder(),
-                    ),
-                    maxLines: 3,
-                  ),
-                  SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Add your update logic here
-                    },
-                    child: Text('Update'),
-                  ),
-                ],
-              )
-            ],
+        drawer: Sidebar(),
+        appBar: TopBar(context, title: "Edit Kategori"),
+        body: FutureBuilder(
+            future: GetKategoriDataBarang(id),
+            builder:
+                (BuildContext ctx, AsyncSnapshot<KategoriBarang?> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                case ConnectionState.done:
+                  {
+                    if (snapshot.data == null) {
+                      return const Center(
+                        child: Text("Mohon periksa koneksi internet anda"),
+                      );
+                    } else {
+                      _namaController.text = snapshot.data!.namaKategoriBarang!;
+
+                      return Center(
+                        child: BoxWithMaxWidth(
+                          maxWidth: 1000,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  const H1("Edit Kategori"),
+                                  Padding(
+                                    padding: const EdgeInsets.all(25),
+                                    child: Column(
+                                      children: [
+                                        TextField(
+                                          controller: _namaController,
+                                          decoration: const InputDecoration(
+                                            labelText: 'Nama Obat',
+                                            border: OutlineInputBorder(),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16.0),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            KategoriBarang payload =
+                                                KategoriBarang(
+                                                    namaKategoriBarang:
+                                                        _namaController.text);
+                                            UpdateKategoriBarang(id, payload)
+                                                .then((status) {
+                                              if (status) {
+                                                Navigator.of(context)
+                                                    .pop('do refresh');
+                                              } else {
+                                                _showFailedDialog();
+                                              }
+                                            });
+                                          },
+                                          child: const Text('Update'),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+
+                default:
+                  {
+                    return const Center(
+                      child: Text(
+                          "Tolong perbarui halaman ini dengan membuka halaman lain dan membuka halaman ini kembali"),
+                    );
+                  }
+              }
+            }));
+  }
+
+  void _showFailedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.red.shade50,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
           ),
-        ),
-      ),
+          title: const Text(
+            'Gagal mengubah data',
+          ),
+          content: const Text(
+            'Mohon periksa internet anda',
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

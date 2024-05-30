@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthKey {
-  static final _secure_storage = new FlutterSecureStorage();
+  final _secure_storage = new FlutterSecureStorage();
 
-  static Future<String> Get() async {
+  Future<String> Get() async {
     String? data = await _secure_storage.read(key: "auth_key");
     if (data != null) {
       return data;
@@ -12,17 +12,18 @@ class AuthKey {
     }
   }
 
-  static Future<void> Set(String value) async {
+  Future<bool> Set(String value) async {
     try {
-      _secure_storage.write(key: "auth_key", value: value);
+      await _secure_storage.write(key: "auth_key", value: value);
+      return true;
     } catch (e) {
-      throw e;
+      return false;
     }
   }
 
-  static Future<void> Clear() async {
+  Future<void> Clear() async {
     try {
-      _secure_storage.delete(key: "auth_key");
+      await _secure_storage.delete(key: "auth_key");
     } catch (e) {
       throw e;
     }
@@ -30,23 +31,31 @@ class AuthKey {
 }
 
 class OtherKeys {
-  static final _secure_storage = new FlutterSecureStorage();
+  final _secure_storage = new FlutterSecureStorage();
 
-  static Future<String?> GetAuthKey(String key) async {
+  Future<String?> Get(String key) async {
     return await _secure_storage.read(key: key);
   }
 
-  static Future<void> Set(String key, String value) async {
+  Future<void> Set(String key, String value) async {
     try {
-      _secure_storage.write(key: key, value: value);
+      await _secure_storage.write(key: key, value: value);
     } catch (e) {
       throw e;
     }
   }
 
-  static Future<void> Delete(String key) async {
+  Future<void> Delete(String key) async {
     try {
-      _secure_storage.delete(key: key);
+      await _secure_storage.delete(key: key);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> Clear() async {
+    try {
+      await _secure_storage.deleteAll();
     } catch (e) {
       throw e;
     }

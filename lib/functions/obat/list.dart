@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<Obat>?> ListObat() async {
   var request = await http.get(Uri.parse("${URLAplikasi.API}/obat/"),
-      headers: {'Authorization': await AuthKey.Get()});
+      headers: {'Authorization': await AuthKey().Get()});
 
   if (request.statusCode == 200) {
     List<dynamic> resbody = jsonDecode(request.body);

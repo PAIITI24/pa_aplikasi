@@ -1,14 +1,15 @@
-import 'package:aplikasi/functions/data/models/obat.dart';
-import 'package:aplikasi/functions/obat/kategori/delete.dart';
-import 'package:aplikasi/functions/obat/kategori/list.dart';
+import 'package:aplikasi/functions/barang/kategori/delete.dart';
+import 'package:aplikasi/functions/barang/kategori/list.dart';
+import 'package:aplikasi/functions/data/models/barang.dart';
+import 'package:aplikasi/page/ManajemenBarang/createKategori.dart';
 import 'package:aplikasi/page/ManajemenBarang/editKategori.dart';
-import 'package:aplikasi/page/ManajemenObat/createKategori.dart';
+import 'package:aplikasi/page/ManajemenObat/editKategori.dart';
 import 'package:flutter/material.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:intl/intl.dart';
 
 class ManagementListKategoriBarang extends StatefulWidget {
-  const ManagementListKategoriBarang({Key? key}) : super(key: key);
+  const ManagementListKategoriBarang({Key? key});
 
   @override
   State<ManagementListKategoriBarang> createState() =>
@@ -20,9 +21,9 @@ class _ManagementListKategoriBarangState
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ListKategoriObat(),
+        future: ListKategoriBarang(),
         builder:
-            (BuildContext ctx, AsyncSnapshot<List<KategoriObat>?> snapshot) {
+            (BuildContext ctx, AsyncSnapshot<List<KategoriBarang>?> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               {
@@ -31,7 +32,7 @@ class _ManagementListKategoriBarangState
 
             case ConnectionState.done:
               {
-                if (snapshot.hasError) {
+                if (snapshot.data == null) {
                   print(snapshot.hasError);
                   return const Center(
                       child: Text("Mohon periksa koneksi internet anda"));
@@ -42,27 +43,31 @@ class _ManagementListKategoriBarangState
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const H1('Daftar Barang'),
+                              const H1('Daftar Kategori Barang'),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ManagementCreateKategori()));
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ManagementCreateKategoriBarang()))
+                                      .then((val) {
+                                    setState(() {});
+                                  });
                                 },
-                                child: const Text('Tambah Barang'),
+                                child: const Text('Tambah Kategori Barang'),
                               ),
                             ]),
                         const SizedBox(height: 30),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              summaryItem("Jumlah Jenis Barang",
+                              summaryItem("Jumlah Jenis kategori",
                                   snapshot.data!.length.toString()),
                             ]),
                         const SizedBox(height: 40),
                         const H2('Tabel Data'),
                         const SizedBox(height: 10),
-                        TableStokBarang(snapshot.data!)
+                        TableDaftarKategori(snapshot.data!)
                       ]);
                 }
               }
@@ -102,20 +107,20 @@ class _ManagementListKategoriBarangState
     );
   }
 
-  Widget TableStokBarang(List<KategoriObat> data) {
+  Widget TableDaftarKategori(List<KategoriBarang> data) {
     DateFormat format = DateFormat("dd/MM/yyyy");
 
     return DataTable(
       columns: const [
         DataColumn(
           label: Text(
-            'Nama Barang',
+            'Nama Kategori',
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
         ),
         DataColumn(
           label: Text(
-            'Stok',
+            'Tanggal Dibuat',
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
         ),
@@ -131,7 +136,7 @@ class _ManagementListKategoriBarangState
           .entries
           .map((entry) => DataRow(
                 cells: [
-                  DataCell(Text(entry.value.namaKategoriObat!)),
+                  DataCell(Text(entry.value.namaKategoriBarang!)),
                   DataCell(Text(format.format(entry.value.createdAt!))),
                   DataCell(Actions(entry.value.id!)),
                 ],
@@ -143,19 +148,25 @@ class _ManagementListKategoriBarangState
   Widget Actions(int id) {
     return Row(
       children: [
-        ElevatedButton(
+        TextButton(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ManagementEditKategoriBarang(id: id)));
+            Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (context) => ManagementEditKategoriBarang(id: id)))
+                .then((val) {
+              if (val == 'do refresh') {
+                setState(() {});
+              }
+            });
           },
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all<Color?>(Colors.amber[900]),
           ),
-          child: Text("Edit", style: TextStyle(color: Colors.black)),
+          child: const Text("Edit", style: TextStyle(color: Colors.black)),
         ),
         const SizedBox(width: 10),
-        ElevatedButton(
+        TextButton(
           onPressed: () {
             _showDeleteConfirmationDialog(id);
           },
@@ -183,7 +194,7 @@ class _ManagementListKategoriBarangState
             style: TextStyle(color: Colors.red),
           ),
           content: const Text(
-            'Apakah Anda yakin ingin menghapus barang ini?',
+            'Apakah Anda yakin ingin menghapus kategori ini?',
             style: TextStyle(color: Colors.red),
           ),
           actions: <Widget>[
@@ -195,7 +206,7 @@ class _ManagementListKategoriBarangState
             ),
             TextButton(
               onPressed: () {
-                DeleteKategoriObat(id).then((res) {
+                DeleteKategoriBarang(id).then((res) {
                   if (res) {
                     setState(() {});
                   }

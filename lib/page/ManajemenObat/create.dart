@@ -338,16 +338,48 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
 
     final File file = File(_selectedFile!.path!);
 
+    double hargaC = 0;
+    try {
+      hargaC = double.parse(harga);
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            content: const Text("Harga harus berupa angka"),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop(); // Close the failure dialog
+                },
+                child: const Text('OK'),
+              )
+            ],
+          );
+        },
+      );
+    }
+
     // Show the loading dialog
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (ctx) {
-        return const AlertDialog(
+        return AlertDialog(
           content: Text(
             "Sedang memasukkan data obat",
             textAlign: TextAlign.center,
           ),
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"))
+          ],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(5)),
           ),
@@ -360,7 +392,7 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
       int.parse(jumlah),
       dosis,
       bentukSediaan,
-      double.parse(harga),
+      hargaC,
       selectedCategoryIds,
       file,
     );

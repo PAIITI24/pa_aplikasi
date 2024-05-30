@@ -163,21 +163,19 @@ class StokMasukObat {
   final DateTime? expiredDate;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final List<Obat>? obats;
+  final Obat? obat;
 
-  StokMasukObat(
-      {this.id,
-      this.obatId,
-      this.stokMasuk,
-      this.expiredDate,
-      this.createdAt,
-      this.updatedAt,
-      this.obats});
+  StokMasukObat({
+    this.id,
+    this.obatId,
+    this.stokMasuk,
+    this.expiredDate,
+    this.createdAt,
+    this.updatedAt,
+    this.obat,
+  });
 
   factory StokMasukObat.fromJson(Map<String, dynamic> json) {
-    var obatFromJson = json['obat'] as List?;
-    List<Obat>? obatList = obatFromJson?.map((i) => Obat.fromJson(i)).toList();
-
     var dateFormat = DateFormat("dd/MM/yyyy");
 
     return StokMasukObat(
@@ -187,7 +185,7 @@ class StokMasukObat {
       expiredDate: dateFormat.parse(json["expired_date"]),
       createdAt: dateFormat.parse(json["created_at"]),
       updatedAt: dateFormat.parse(json["updated_at"]),
-      obats: obatList,
+      obat: json['obat'] != null ? Obat.fromJson(json['obat']) : null,
     );
   }
 
@@ -202,7 +200,51 @@ class StokMasukObat {
           expiredDate == null ? null : dateFormat.format(expiredDate!),
       "created_at": createdAt == null ? null : dateFormat.format(createdAt!),
       "updated_at": updatedAt == null ? null : dateFormat.format(updatedAt!),
-      "obat": obats?.map((obat) => obat.toJson()).toList()
+      "obat": obat?.toJson(),
+    };
+  }
+}
+
+class StokKeluarObat {
+  final int? id;
+  final int? obatId;
+  final int? stokKeluar;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final Obat? obat;
+
+  StokKeluarObat({
+    this.id,
+    this.obatId,
+    this.stokKeluar,
+    this.createdAt,
+    this.updatedAt,
+    this.obat,
+  });
+
+  factory StokKeluarObat.fromJson(Map<String, dynamic> json) {
+    var dateFormat = DateFormat("dd/MM/yyyy");
+
+    return StokKeluarObat(
+      id: json["id"],
+      obatId: json["obat_id"],
+      stokKeluar: json["stok_keluar"],
+      createdAt: dateFormat.parse(json["created_at"]),
+      updatedAt: dateFormat.parse(json["updated_at"]),
+      obat: json['obat'] != null ? Obat.fromJson(json['obat']) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    var dateFormat = DateFormat("dd/MM/yyyy");
+
+    return {
+      "id": id,
+      "obat_id": obatId,
+      "stok_keluar": stokKeluar,
+      "created_at": createdAt == null ? null : dateFormat.format(createdAt!),
+      "updated_at": updatedAt == null ? null : dateFormat.format(updatedAt!),
+      "obat": obat?.toJson(),
     };
   }
 }
