@@ -108,7 +108,7 @@ class _ManagementListKategoriBarangState
   }
 
   Widget TableDaftarKategori(List<KategoriBarang> data) {
-    DateFormat format = DateFormat("dd/MM/yyyy");
+    DateFormat format = DateFormat("dd MMMM yyyy");
 
     return DataTable(
       columns: const [

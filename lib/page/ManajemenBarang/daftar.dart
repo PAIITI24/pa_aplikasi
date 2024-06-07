@@ -17,6 +17,8 @@ class ManagementListBarang extends StatefulWidget {
 }
 
 class _ManagementListBarangState extends State<ManagementListBarang> {
+  final searchTerm = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -48,7 +50,7 @@ class _ManagementListBarangState extends State<ManagementListBarang> {
   }
 
   Widget _body(List<Barang> databarang) {
-    int totalStok = (databarang.length > 0)
+    int totalStok = (databarang.isNotEmpty)
         ? databarang
             .map((x) => x.jumlahStok!)
             .reduce((value, element) => value + element)
@@ -116,124 +118,146 @@ class _ManagementListBarangState extends State<ManagementListBarang> {
 
   Widget TableStokbarang(List<Barang> dataBarang) {
     var sW = MediaQuery.of(context).size.width;
-    var dF = DateFormat("dd/MM/yyyy");
+    var dF = DateFormat("dd MMMM yyyy");
 
     return Container(
       width: sW * 0.05,
       child: Padding(
           padding: EdgeInsets.only(top: 30),
           child: Column(
-            children: List.generate(dataBarang.length, (i) {
-              return SingleChildScrollView(
-                child: Card(
-                  margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 25),
-                          width: sW * 0.15,
-                          height: sW * 0.25,
-                          child: Image.network(
-                            dataBarang[i].gambar!,
-                          ),
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 10, left: 30, right: 30),
+                  child: Expanded(
+                    child: Row(children: [
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: 'Cari barang barang disni',
+                          border: OutlineInputBorder(),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 30),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  child: H2(
-                                    dataBarang[i].namaBarang!,
-                                  ),
-                                ),
-                                Row(
+                        controller: searchTerm,
+                      )),
+                      const SizedBox(width: 10),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.search),
+                      )
+                    ]),
+                  )),
+              Column(
+                children: dataBarang.where((x) {
+                  return x.namaBarang!.contains(searchTerm.text);
+                }).map((data) {
+                  return SingleChildScrollView(
+                    child: Card(
+                      margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 25),
+                              width: sW * 0.15,
+                              height: sW * 0.25,
+                              child: Image.network(
+                                data.gambar!,
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 30),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Expanded(
-                                      child: Text(
-                                        "ditambahkan pada ${dF.format(dataBarang[i].createdAt!)}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    Container(
+                                      child: H2(
+                                        data.namaBarang!,
                                       ),
                                     ),
-                                    const SizedBox(width: 20),
-                                    Expanded(
-                                      child: Row(
-                                        children: List.generate(
-                                          dataBarang[i].kategoriBarang == null
-                                              ? 0
-                                              : dataBarang[i]
-                                                  .kategoriBarang!
-                                                  .length,
-                                          (ii) {
-                                            return Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 5),
-                                              child: Badge(
-                                                label: Text(
-                                                  dataBarang[i]
-                                                      .kategoriBarang![ii]
-                                                      .namaKategoriBarang!,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "ditambahkan pada ${dF.format(data.createdAt!)}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Row(
+                                          children: List.generate(
+                                            data.kategoriBarang == null
+                                                ? 0
+                                                : data.kategoriBarang!.length,
+                                            (ii) {
+                                              return Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 5),
+                                                child: Badge(
+                                                  label: Text(
+                                                    data.kategoriBarang![ii]
+                                                        .namaKategoriBarang!,
+                                                  ),
+                                                  backgroundColor:
+                                                      Colors.blue.shade400,
                                                 ),
-                                                backgroundColor:
-                                                    Colors.blue.shade400,
-                                              ),
-                                            );
-                                          },
+                                              );
+                                            },
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
+                                    Row(children: [
+                                      info(
+                                          "Jumlah Stok", "${data.jumlahStok!}"),
+                                      const SizedBox(width: 10),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ubahStokBarangView(
+                                                          id: data.id!)))
+                                              .then((x) {
+                                            if (x == "boombaclat") {
+                                              setState(() {});
+                                            }
+                                          });
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.amber.shade900),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.white),
+                                        ),
+                                        child: const Text("ubah Stok"),
+                                      ),
+                                    ]),
+                                    info("Deskripsi", "${data.deskripsi!}"),
+                                    info("Harga", "Rp ${data.harga!}"),
+                                    SizedBox(height: 20),
+                                    Actions(context, data.id!),
                                   ],
                                 ),
-                                Row(children: [
-                                  info("Jumlah Stok",
-                                      "${dataBarang[i].jumlahStok!}"),
-                                  const SizedBox(width: 10),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ubahStokBarangView(
-                                                      id: dataBarang[i].id!)))
-                                          .then((x) {
-                                        if (x == "boombaclat") {
-                                          setState(() {});
-                                        }
-                                      });
-                                    },
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.amber.shade900),
-                                      foregroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white),
-                                    ),
-                                    child: const Text("ubah Stok"),
-                                  ),
-                                ]),
-                                info(
-                                    "Deskripsi", "${dataBarang[i].deskripsi!}"),
-                                info("Harga", "Rp ${dataBarang[i].harga!}"),
-                                SizedBox(height: 20),
-                                Actions(context, dataBarang[i].id!),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }).reversed.toList(),
+                  );
+                }).toList(),
+              ),
+            ],
           )),
     );
   }

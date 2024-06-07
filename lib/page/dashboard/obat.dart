@@ -121,7 +121,7 @@ class _ObatViewState extends State<ObatView> {
               rows: snp.data!
                   .map((item) => DataRow(cells: [
                         DataCell(Text('${item.namaKategoriObat}')),
-                        DataCell(Text('x')),
+                        DataCell(Text('${Counter(item)}')),
                         DataCell(Text('Rp 10.000')),
                       ]))
                   .toList(),

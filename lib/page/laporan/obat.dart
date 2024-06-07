@@ -1,9 +1,10 @@
 import 'package:aplikasi/functions/data/models/obat.dart';
 import 'package:aplikasi/functions/laporan/obat.dart';
-import 'package:aplikasi/functions/obat/laporan/print.dart';
+import 'package:aplikasi/functions/obat/laporan/printObat.dart';
 import 'package:aplikasi/functions/obat/list.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ObatView extends StatefulWidget {
@@ -26,7 +27,7 @@ class _ObatViewState extends State<ObatView> {
             const H1('Obat'),
             IconButton(
                 onPressed: () {
-                  printReport(context);
+                  printReportObat(context);
                 },
                 icon: const Icon(Icons.print))
           ],
@@ -79,8 +80,8 @@ class _ObatViewState extends State<ObatView> {
                 }
               }),
         ]),
-        const SizedBox(height: 40),
-        TableStokObatMasuk(),
+        // const SizedBox(height: 40),
+        // TableStokObatMasuk(),
         const SizedBox(height: 40),
         TableStokObatKeluar(),
       ],
@@ -121,38 +122,49 @@ Widget TableStokObatKeluar() {
           case ConnectionState.done:
             {
               if (snpsht.data != null) {
-                DateFormat df = DateFormat("dd/MM/yyyy");
+                DateFormat df = DateFormat("dd MMMM yyyy");
 
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const H2('Stok Keluar'),
                       const SizedBox(height: 10),
-                      DataTable(
-                          columns: const [
-                            DataColumn(
-                                label: Text(
-                              'Item Masuk',
-                              style: TextStyle(fontWeight: FontWeight.w900),
-                            )),
-                            DataColumn(
-                                label: Text(
-                              'Tanggal Masuk',
-                              style: TextStyle(fontWeight: FontWeight.w900),
-                            )),
-                            DataColumn(
-                                label: Text(
-                              'Jumlah Masuk',
-                              style: TextStyle(fontWeight: FontWeight.w900),
-                            )),
-                          ],
-                          rows: snpsht.data!.map((x) {
-                            return DataRow(cells: [
-                              DataCell(Text("${x.obat!.namaObat}")),
-                              DataCell(Text("${df.format(x.createdAt!)}")),
-                              DataCell(Text("${x.stokKeluar}")),
-                            ]);
-                          }).toList())
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: List.generate(5, (i) {
+                          return Container(
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              constraints: BoxConstraints(maxWidth: 550),
+                              child: Card(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            constraints: const BoxConstraints(
+                                                maxWidth: 300),
+                                            child: H3("obat $i"),
+                                          ),
+                                          Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text("21 June 2024",
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 20)),
+                                                SizedBox(height: 5),
+                                                Row(children: [
+                                                  statusLabel((i % 2 == 0)),
+                                                  const SizedBox(width: 10),
+                                                  const H4("31 buah"),
+                                                ])
+                                              ]),
+                                        ],
+                                      ))));
+                        }),
+                      )
                     ]);
               } else {
                 return const Center(
@@ -172,6 +184,15 @@ Widget TableStokObatKeluar() {
       });
 }
 
+Widget statusLabel(bool masuk) {
+  switch (masuk) {
+    case true:
+      return H4("masuk", color: Colors.green.shade500);
+    case false:
+      return H4("keluar", color: Colors.red.shade500);
+  }
+}
+
 Widget TableStokObatMasuk() {
   return FutureBuilder(
       future: fetchLaporanMasukStokObat(),
@@ -185,7 +206,7 @@ Widget TableStokObatMasuk() {
           case ConnectionState.done:
             {
               if (snpsht.data != null) {
-                DateFormat df = DateFormat("dd/MM/yyyy");
+                DateFormat df = DateFormat("dd MMMM yyyy");
 
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -212,8 +233,8 @@ Widget TableStokObatMasuk() {
                           ],
                           rows: snpsht.data!.map((x) {
                             return DataRow(cells: [
-                              DataCell(Text("${x.obat!.namaObat}")),
-                              DataCell(Text("${df.format(x.createdAt!)}")),
+                              DataCell(Text(x.obat!.namaObat!)),
+                              DataCell(Text(df.format(x.createdAt!))),
                               DataCell(Text("${x.stokMasuk}")),
                             ]);
                           }).toList())

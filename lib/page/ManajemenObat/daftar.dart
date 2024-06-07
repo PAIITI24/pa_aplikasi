@@ -5,8 +5,8 @@ import 'package:aplikasi/page/ManajemenObat/create.dart';
 import 'package:aplikasi/page/ManajemenObat/edit.dart';
 import 'package:aplikasi/page/ManajemenObat/ubahStok.dart';
 import 'package:aplikasi/page/component/titles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -18,6 +18,10 @@ class ManagementListObat extends StatefulWidget {
 }
 
 class _ManagementListObatState extends State<ManagementListObat> {
+  final searchTerm = TextEditingController();
+  var searchedListObat = List<Obat>.empty();
+  var dataObat = List<Obat>.empty();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -117,126 +121,159 @@ class _ManagementListObatState extends State<ManagementListObat> {
 
   Widget TableStokObat(List<Obat> dataObat) {
     var sW = MediaQuery.of(context).size.width;
-    var dF = DateFormat("dd/MM/yyyy");
+    var dF = DateFormat("dd MMMM yyyy");
 
     return Container(
       width: sW * 0.05,
       child: Padding(
-          padding: EdgeInsets.only(top: 30),
+          padding: EdgeInsets.only(top: 10),
           child: Column(
-            children: List.generate(dataObat.length, (i) {
-              return SingleChildScrollView(
-                child: Card(
-                  margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 25),
-                          width: sW * 0.15,
-                          height: sW * 0.25,
-                          child: Image.network(
-                            dataObat[i].gambar!,
-                          ),
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 10, left: 30, right: 30),
+                  child: Expanded(
+                    child: Row(children: [
+                      Expanded(
+                          child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: 'Cari barang obat disni',
+                          border: OutlineInputBorder(),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 30),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  child: H2(
-                                    dataObat[i].namaObat!,
-                                  ),
-                                ),
-                                Row(
+                        controller: searchTerm,
+                      )),
+                      SizedBox(width: 10),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.search),
+                      )
+                    ]),
+                  )),
+              const SizedBox(height: 20),
+              Column(
+                  children: dataObat
+                      .where((t) {
+                        return t.namaObat!.contains(searchTerm.text);
+                      })
+                      .map((x) => SingleChildScrollView(
+                            child: Card(
+                              margin: EdgeInsets.only(
+                                  bottom: 20, left: 30, right: 30),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Expanded(
-                                      child: Text(
-                                        "ditambahkan pada ${dF.format(dataObat[i].createdAt!)}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 25),
+                                      width: sW * 0.15,
+                                      height: sW * 0.25,
+                                      child: Image.network(
+                                        x.gambar!,
                                       ),
                                     ),
-                                    const SizedBox(width: 20),
                                     Expanded(
-                                      child: Row(
-                                        children: List.generate(
-                                          dataObat[i].kategoriObat == null
-                                              ? 0
-                                              : dataObat[i]
-                                                  .kategoriObat!
-                                                  .length,
-                                          (ii) {
-                                            return Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 5),
-                                              child: Badge(
-                                                label: Text(
-                                                  dataObat[i]
-                                                      .kategoriObat![ii]
-                                                      .namaKategoriObat!,
-                                                ),
-                                                backgroundColor:
-                                                    Colors.blue.shade400,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 30),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              child: H2(
+                                                x.namaObat!,
                                               ),
-                                            );
-                                          },
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "ditambahkan pada ${dF.format(x.createdAt!)}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: List.generate(
+                                                    x.kategoriObat == null
+                                                        ? 0
+                                                        : x.kategoriObat!
+                                                            .length,
+                                                    (ii) {
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 5),
+                                                        child: Badge(
+                                                          label: Text(
+                                                            x.kategoriObat![ii]
+                                                                .namaKategoriObat!,
+                                                          ),
+                                                          backgroundColor:
+                                                              Colors.blue
+                                                                  .shade400,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(children: [
+                                              info("Jumlah Stok",
+                                                  "${x.jumlahStok!}"),
+                                              const SizedBox(width: 10),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ubahStokObatView(
+                                                                  id: x.id!)))
+                                                      .then((x) {
+                                                    if (x == "boombaclat") {
+                                                      setState(() {});
+                                                    }
+                                                  });
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors
+                                                              .amber.shade900),
+                                                  foregroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                ),
+                                                child: const Text("ubah Stok"),
+                                              ),
+                                            ]),
+                                            info("Bentuk Sediaan",
+                                                "${x.bentukSediaan!}"),
+                                            info("Dosis", "${x.dosisObat!}"),
+                                            info("Harga",
+                                                "Rp ${x.hargaSediaan!}"),
+                                            SizedBox(height: 20),
+                                            Actions(context, x.id!),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                Row(children: [
-                                  info("Jumlah Stok",
-                                      "${dataObat[i].jumlahStok!}"),
-                                  const SizedBox(width: 10),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ubahStokObatView(
-                                                      id: dataObat[i].id!)))
-                                          .then((x) {
-                                        if (x == "boombaclat") {
-                                          setState(() {});
-                                        }
-                                      });
-                                    },
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.amber.shade900),
-                                      foregroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white),
-                                    ),
-                                    child: const Text("ubah Stok"),
-                                  ),
-                                ]),
-                                info("Bentuk Sediaan",
-                                    "${dataObat[i].bentukSediaan!}"),
-                                info("Dosis", "${dataObat[i].dosisObat!}"),
-                                info(
-                                    "Harga", "Rp ${dataObat[i].hargaSediaan!}"),
-                                SizedBox(height: 20),
-                                Actions(context, dataObat[i].id!),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }).reversed.toList(),
+                          ))
+                      .toList()),
+            ],
           )),
     );
   }

@@ -3,6 +3,7 @@ import 'package:aplikasi/functions/data/models/barang.dart';
 import 'package:aplikasi/functions/data/models/obat.dart';
 import 'package:aplikasi/functions/laporan/barang.dart';
 import 'package:aplikasi/functions/laporan/obat.dart';
+import 'package:aplikasi/functions/obat/laporan/printBarang.dart';
 import 'package:aplikasi/functions/obat/list.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,11 @@ class _ProdukViewState extends State<ProdukView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const H1('Barang'),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.print))
+            IconButton(
+                onPressed: () async {
+                  await printReportBarang(context);
+                },
+                icon: const Icon(Icons.print))
           ],
         ),
         const SizedBox(height: 10),
@@ -119,12 +124,14 @@ Widget TableStokObatKeluar() {
           case ConnectionState.done:
             {
               if (snpsht.data != null) {
-                DateFormat df = DateFormat("dd/MM/yyyy");
+                DateFormat df = DateFormat("dd MMMM yyyy");
 
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const H2('Stok Keluar'),
+                      const H1('Obat'),
+                      // PDFTemplateBarang
                       const SizedBox(height: 10),
                       DataTable(
                           columns: const [
@@ -183,7 +190,7 @@ Widget TableStokObatMasuk() {
           case ConnectionState.done:
             {
               if (snpsht.data != null) {
-                DateFormat df = DateFormat("dd/MM/yyyy");
+                DateFormat df = DateFormat("dd MMMM yyyy");
 
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -100,8 +100,8 @@ class _ProdukViewState extends State<ProdukView> {
 
   Widget TableStokObat() {
     return FutureBuilder(
-        future: ListKategoriObat(),
-        builder: (BuildContext ctx, AsyncSnapshot<List<KategoriObat>?> snp) {
+        future: ListKategoriBarang(),
+        builder: (BuildContext ctx, AsyncSnapshot<List<KategoriBarang>?> snp) {
           if (snp.connectionState == ConnectionState.done && snp.data != null) {
             return DataTable(
               columns: const [
@@ -123,8 +123,8 @@ class _ProdukViewState extends State<ProdukView> {
               ],
               rows: snp.data!
                   .map((item) => DataRow(cells: [
-                        DataCell(Text('${item.namaKategoriObat}')),
-                        DataCell(Text('x')),
+                        DataCell(Text('${item.namaKategoriBarang}')),
+                        DataCell(Text('${Counter(item)}')),
                         DataCell(Text('Rp 10.000')),
                       ]))
                   .toList(),

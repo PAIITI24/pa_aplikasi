@@ -15,16 +15,20 @@ class H1 extends StatelessWidget {
 
 class H2 extends StatelessWidget {
   final String text;
+  final Color? color;
 
-  const H2(this.text, {super.key});
+  const H2(this.text, {this.color, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.inter(fontSize: 28, fontWeight: FontWeight.bold),
-      softWrap: true,
-      maxLines: 2,
+      style: GoogleFonts.inter(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: (color ?? Colors.black)),
+      softWrap: false,
+      maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -44,12 +48,16 @@ class H3 extends StatelessWidget {
 
 class H4 extends StatelessWidget {
   final String text;
+  final Color? color;
 
-  const H4(this.text, {super.key});
+  const H4(this.text, {this.color, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold));
+        style: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: color ?? Colors.black));
   }
 }
