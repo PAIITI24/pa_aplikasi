@@ -24,7 +24,7 @@ class _LaporanState extends State<Laporan> {
               tabBar: const TabBar(
                 tabs: [
                   Tab(text: 'Obat'),
-                  Tab(text: 'Produk'),
+                  Tab(text: 'Barang'),
                 ],
               )),
           body: const TabBarView(

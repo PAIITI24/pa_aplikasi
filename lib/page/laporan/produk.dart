@@ -197,12 +197,12 @@ class _ProdukViewState extends State<ProdukView> {
                                         orderByExpiredDate = false;
                                       })),
                               FilterChip(
-                                  label: const Text("hanya barang masuk"),
+                                  label: const Text("hanya stok masuk"),
                                   selected: mode == Mode.masukonly,
                                   onSelected: (val) =>
                                       setState(() => mode = Mode.masukonly)),
                               FilterChip(
-                                  label: const Text("Hanya barang keluar"),
+                                  label: const Text("Hanya stok keluar"),
                                   selected: mode == Mode.keluaronly,
                                   onSelected: (val) => setState(() {
                                         mode = Mode.keluaronly;
@@ -677,10 +677,10 @@ class _ProdukViewState extends State<ProdukView> {
   Widget statusLabel(Jenis jenis, {bool sudahexpired = false}) {
     switch (jenis) {
       case Jenis.Masuk:
-        return H4("masuk",
+        return H4("stok masuk",
             color: (!sudahexpired) ? Colors.green.shade500 : Colors.grey);
       case Jenis.Keluar:
-        return H4("keluar",
+        return H4("stok keluar",
             color: (!sudahexpired) ? Colors.red.shade500 : Colors.grey);
     }
   }
