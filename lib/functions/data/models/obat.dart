@@ -138,21 +138,19 @@ class StokObatAddReq {
 class StokObatRedReq {
   final int? obatId;
   final int? amount;
+  final int? stokMasukId;
 
-  StokObatRedReq({this.obatId, this.amount});
+  StokObatRedReq({this.obatId, this.amount, this.stokMasukId});
 
   factory StokObatRedReq.fromJson(Map<String, dynamic> json) {
     return StokObatRedReq(
-      obatId: json["obat_id"],
-      amount: json["amount"],
-    );
+        obatId: json["obat_id"],
+        amount: json["amount"],
+        stokMasukId: json["stok_masuk_id"]);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      "obat_id": obatId,
-      "amount": amount,
-    };
+    return {"obat_id": obatId, "amount": amount, "stok_masuk_id": stokMasukId};
   }
 }
 
@@ -208,19 +206,22 @@ class StokMasukObat {
 class StokKeluarObat {
   final int? id;
   final int? obatId;
+  final int? stokMasukId;
   final int? stokKeluar;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final Obat? obat;
+  final StokMasukObat? stokMasuk;
 
-  StokKeluarObat({
-    this.id,
-    this.obatId,
-    this.stokKeluar,
-    this.createdAt,
-    this.updatedAt,
-    this.obat,
-  });
+  StokKeluarObat(
+      {this.id,
+      this.obatId,
+      this.stokMasukId,
+      this.stokKeluar,
+      this.createdAt,
+      this.updatedAt,
+      this.obat,
+      this.stokMasuk});
 
   factory StokKeluarObat.fromJson(Map<String, dynamic> json) {
     var dateFormat = DateFormat("dd/MM/yyyy");
@@ -228,10 +229,14 @@ class StokKeluarObat {
     return StokKeluarObat(
       id: json["id"],
       obatId: json["obat_id"],
+      stokMasukId: json["stok_masuk_id"],
       stokKeluar: json["stok_keluar"],
       createdAt: dateFormat.parse(json["created_at"]),
       updatedAt: dateFormat.parse(json["updated_at"]),
       obat: json['obat'] != null ? Obat.fromJson(json['obat']) : null,
+      stokMasuk: json['stok_masuk'] != null
+          ? StokMasukObat.fromJson(json['stok_masuk'])
+          : null,
     );
   }
 
@@ -241,10 +246,12 @@ class StokKeluarObat {
     return {
       "id": id,
       "obat_id": obatId,
+      "stok_masuk_id": stokMasukId,
       "stok_keluar": stokKeluar,
       "created_at": createdAt == null ? null : dateFormat.format(createdAt!),
       "updated_at": updatedAt == null ? null : dateFormat.format(updatedAt!),
       "obat": obat?.toJson(),
+      "stok_masuk": stokMasuk?.toJson(),
     };
   }
 }

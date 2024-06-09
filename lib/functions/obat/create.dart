@@ -6,14 +6,8 @@ import 'package:aplikasi/functions/shared/securestorage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-Future<bool> createObatData(
-    String namaObat,
-    int jumlah,
-    String dosis,
-    String bentukSediaan,
-    double harga,
-    List<int?> idKategoriObat,
-    File imageFile) async {
+Future<bool> createObatData(String namaObat, String dosis, String bentukSediaan,
+    double harga, List<int?> idKategoriObat, File imageFile) async {
   final url = "${URLAplikasi.API}/obat/"; // Replace with your API endpoint
 
   final request = http.MultipartRequest('POST', Uri.parse(url));
@@ -26,7 +20,6 @@ Future<bool> createObatData(
     "data_obat": Obat(
             namaObat: namaObat,
             dosisObat: dosis,
-            jumlahStok: jumlah,
             bentukSediaan: bentukSediaan,
             hargaSediaan: harga)
         .toJson()

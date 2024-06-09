@@ -3,11 +3,16 @@ import 'package:aplikasi/functions/barang/list.dart';
 import 'package:aplikasi/functions/data/models/barang.dart';
 import 'package:aplikasi/page/ManajemenBarang/create.dart';
 import 'package:aplikasi/page/ManajemenBarang/edit.dart';
+import 'package:aplikasi/page/ManajemenBarang/historistok.dart';
 import 'package:aplikasi/page/ManajemenBarang/ubahStok.dart';
 import 'package:aplikasi/page/component/titles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
+import 'package:aplikasi/functions/obat/delete.dart';
+import 'package:aplikasi/page/ManajemenObat/historistok.dart';
+import 'package:aplikasi/page/ManajemenObat/edit.dart';
 
 class ManagementListBarang extends StatefulWidget {
   const ManagementListBarang({super.key});
@@ -18,6 +23,8 @@ class ManagementListBarang extends StatefulWidget {
 
 class _ManagementListBarangState extends State<ManagementListBarang> {
   final searchTerm = TextEditingController();
+  var searchedListBarang = List<Barang>.empty();
+  var dataBarang = List<Barang>.empty();
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +56,9 @@ class _ManagementListBarangState extends State<ManagementListBarang> {
         });
   }
 
-  Widget _body(List<Barang> databarang) {
-    int totalStok = (databarang.isNotEmpty)
-        ? databarang
+  Widget _body(List<Barang> dataBarang) {
+    int totalStok = (dataBarang.length > 0)
+        ? dataBarang
             .map((x) => x.jumlahStok!)
             .reduce((value, element) => value + element)
         : 0;
@@ -77,18 +84,18 @@ class _ManagementListBarangState extends State<ManagementListBarang> {
         ]),
         const SizedBox(height: 30),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          summaryItem("Jumlah Jenis barang", "${databarang.length}"),
-          summaryItem("Jumlah barang", "$totalStok"),
+          summaryItem("Jumlah Jenis Barang", "${dataBarang.length}"),
+          summaryItem("Jumlah Barang", "$totalStok"),
         ]),
         const SizedBox(height: 40),
         const H2('Tabel Data'),
         const SizedBox(height: 10),
         if (MediaQuery.of(context).size.width > 600) ...{
-          TableStokbarang(databarang),
+          tableStokBarrang(dataBarang),
         } else ...{
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: TableStokbarang(databarang),
+            child: tableStokBarrang(dataBarang),
           ),
         },
       ],
@@ -116,14 +123,14 @@ class _ManagementListBarangState extends State<ManagementListBarang> {
     ));
   }
 
-  Widget TableStokbarang(List<Barang> dataBarang) {
+  Widget tableStokBarrang(List<Barang> dataBarang) {
     var sW = MediaQuery.of(context).size.width;
     var dF = DateFormat("dd MMMM yyyy");
 
     return Container(
       width: sW * 0.05,
       child: Padding(
-          padding: EdgeInsets.only(top: 30),
+          padding: EdgeInsets.only(top: 10),
           child: Column(
             children: [
               Padding(
@@ -134,12 +141,12 @@ class _ManagementListBarangState extends State<ManagementListBarang> {
                       Expanded(
                           child: TextField(
                         decoration: const InputDecoration(
-                          labelText: 'Cari barang barang disni',
+                          labelText: 'Cari barang barang/produk disni',
                           border: OutlineInputBorder(),
                         ),
                         controller: searchTerm,
                       )),
-                      const SizedBox(width: 10),
+                      SizedBox(width: 10),
                       IconButton(
                         onPressed: () {
                           setState(() {});
@@ -148,115 +155,151 @@ class _ManagementListBarangState extends State<ManagementListBarang> {
                       )
                     ]),
                   )),
+              const SizedBox(height: 20),
               Column(
-                children: dataBarang.where((x) {
-                  return x.namaBarang!.contains(searchTerm.text);
-                }).map((data) {
-                  return SingleChildScrollView(
-                    child: Card(
-                      margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 25),
-                              width: sW * 0.15,
-                              height: sW * 0.25,
-                              child: Image.network(
-                                data.gambar!,
-                              ),
-                            ),
-                            Expanded(
+                  children: dataBarang
+                      .where((t) {
+                        return t.namaBarang!.contains(searchTerm.text);
+                      })
+                      .map((x) => SingleChildScrollView(
+                            child: Card(
+                              margin: EdgeInsets.only(
+                                  bottom: 20, left: 30, right: 30),
                               child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 30),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      child: H2(
-                                        data.namaBarang!,
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 25),
+                                      width: sW * 0.15,
+                                      height: sW * 0.25,
+                                      child: Image.network(
+                                        x.gambar!,
                                       ),
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "ditambahkan pada ${dF.format(data.createdAt!)}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Row(
-                                          children: List.generate(
-                                            data.kategoriBarang == null
-                                                ? 0
-                                                : data.kategoriBarang!.length,
-                                            (ii) {
-                                              return Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 5),
-                                                child: Badge(
-                                                  label: Text(
-                                                    data.kategoriBarang![ii]
-                                                        .namaKategoriBarang!,
+                                    Expanded(
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 30),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              child: H2(
+                                                x.namaBarang!,
+                                              ),
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "ditambahkan pada ${dF.format(x.createdAt!)}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
                                                   ),
-                                                  backgroundColor:
-                                                      Colors.blue.shade400,
                                                 ),
-                                              );
-                                            },
-                                          ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: List.generate(
+                                                    x.kategoriBarang == null
+                                                        ? 0
+                                                        : x.kategoriBarang!
+                                                            .length,
+                                                    (ii) {
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 5),
+                                                        child: Badge(
+                                                          label: Text(
+                                                            x.kategoriBarang![ii]
+                                                                .namaKategoriBarang!,
+                                                          ),
+                                                          backgroundColor:
+                                                              Colors.blue
+                                                                  .shade400,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(children: [
+                                              info("Jumlah Stok",
+                                                  "${x.jumlahStok!}"),
+                                              const SizedBox(width: 20),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ubahStokBarangView(
+                                                                  id: x.id!)))
+                                                      .then((x) {
+                                                    if (x == "boombaclat") {
+                                                      setState(() {});
+                                                    }
+                                                  });
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors
+                                                              .green.shade500),
+                                                  foregroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                ),
+                                                icon: const Icon(Icons.add),
+                                              ),
+                                              SizedBox(width: 10),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DaftarStokBarangView(
+                                                                  x.id!)))
+                                                      .then((x) {
+                                                    if (x == "boombaclat") {
+                                                      setState(() {});
+                                                    }
+                                                  });
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.blue.shade500),
+                                                  foregroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                ),
+                                                icon:
+                                                    const Icon(Icons.list_alt),
+                                              ),
+                                            ]),
+                                            info(
+                                                "Deskripsi", "${x.deskripsi!}"),
+                                            info("Harga", "Rp. ${x.harga!}"),
+                                            SizedBox(height: 20),
+                                            Actions(context, x.id!),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    Row(children: [
-                                      info(
-                                          "Jumlah Stok", "${data.jumlahStok!}"),
-                                      const SizedBox(width: 10),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ubahStokBarangView(
-                                                          id: data.id!)))
-                                              .then((x) {
-                                            if (x == "boombaclat") {
-                                              setState(() {});
-                                            }
-                                          });
-                                        },
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.amber.shade900),
-                                          foregroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.white),
-                                        ),
-                                        child: const Text("ubah Stok"),
                                       ),
-                                    ]),
-                                    info("Deskripsi", "${data.deskripsi!}"),
-                                    info("Harga", "Rp ${data.harga!}"),
-                                    SizedBox(height: 20),
-                                    Actions(context, data.id!),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
+                          ))
+                      .toList()),
             ],
           )),
     );

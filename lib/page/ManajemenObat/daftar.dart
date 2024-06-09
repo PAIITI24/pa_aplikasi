@@ -1,6 +1,7 @@
 import 'package:aplikasi/functions/data/models/obat.dart';
 import 'package:aplikasi/functions/obat/delete.dart';
 import 'package:aplikasi/functions/obat/list.dart';
+import 'package:aplikasi/page/ManajemenObat/historistok.dart';
 import 'package:aplikasi/page/ManajemenObat/create.dart';
 import 'package:aplikasi/page/ManajemenObat/edit.dart';
 import 'package:aplikasi/page/ManajemenObat/ubahStok.dart';
@@ -230,8 +231,8 @@ class _ManagementListObatState extends State<ManagementListObat> {
                                             Row(children: [
                                               info("Jumlah Stok",
                                                   "${x.jumlahStok!}"),
-                                              const SizedBox(width: 10),
-                                              TextButton(
+                                              const SizedBox(width: 20),
+                                              IconButton(
                                                 onPressed: () {
                                                   Navigator.of(context)
                                                       .push(MaterialPageRoute(
@@ -248,12 +249,37 @@ class _ManagementListObatState extends State<ManagementListObat> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all(
                                                           Colors
-                                                              .amber.shade900),
+                                                              .green.shade500),
                                                   foregroundColor:
                                                       MaterialStateProperty.all(
                                                           Colors.white),
                                                 ),
-                                                child: const Text("ubah Stok"),
+                                                icon: const Icon(Icons.add),
+                                              ),
+                                              SizedBox(width: 10),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DaftarStokObatView(
+                                                                  x.id!)))
+                                                      .then((x) {
+                                                    if (x == "boombaclat") {
+                                                      setState(() {});
+                                                    }
+                                                  });
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.blue.shade500),
+                                                  foregroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.white),
+                                                ),
+                                                icon:
+                                                    const Icon(Icons.list_alt),
                                               ),
                                             ]),
                                             info("Bentuk Sediaan",

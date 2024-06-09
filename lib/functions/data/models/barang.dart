@@ -135,20 +135,22 @@ class StokBarangAddReq {
 class StokBarangRedReq {
   final int? barangId;
   final int? amount;
+  final int? stokMasukId;
 
-  StokBarangRedReq({this.barangId, this.amount});
+  StokBarangRedReq({this.barangId, this.amount, this.stokMasukId});
 
   factory StokBarangRedReq.fromJson(Map<String, dynamic> json) {
     return StokBarangRedReq(
-      barangId: json["barang_id"],
-      amount: json["amount"],
-    );
+        barangId: json["barang_id"],
+        amount: json["amount"],
+        stokMasukId: json["stok_masuk_id"]);
   }
 
   Map<String, dynamic> toJson() {
     return {
       "barang_id": barangId,
       "amount": amount,
+      "stok_masuk_id": stokMasukId
     };
   }
 }
@@ -208,18 +210,22 @@ class StokMasukBarang {
 class StokKeluarBarang {
   final int? id;
   final int? barangId;
+  final int? stokMasukId;
   final int? stokKeluar;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final Barang? barang;
+  final StokMasukBarang? stokMasuk;
 
   StokKeluarBarang(
       {this.id,
       this.barangId,
+      this.stokMasukId,
       this.stokKeluar,
       this.createdAt,
       this.updatedAt,
-      this.barang});
+      this.barang,
+      this.stokMasuk});
 
   factory StokKeluarBarang.fromJson(Map<String, dynamic> json) {
     var dateFormat = DateFormat("dd/MM/yyyy");
@@ -234,6 +240,9 @@ class StokKeluarBarang {
           ? dateFormat.parse(json["updated_at"])
           : null,
       barang: json["barang"] != null ? Barang.fromJson(json["barang"]) : null,
+      stokMasuk: json["stok_masuk"] != null
+          ? StokMasukBarang.fromJson(json["stok_masuk"])
+          : null,
     );
   }
 
@@ -246,6 +255,7 @@ class StokKeluarBarang {
       "created_at": createdAt == null ? null : dateFormat.format(createdAt!),
       "updated_at": updatedAt == null ? null : dateFormat.format(updatedAt!),
       "barang": barang?.toJson(),
+      "stok_masuk": stokMasuk?.toJson()
     };
   }
 }

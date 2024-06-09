@@ -35,13 +35,4 @@ class _LaporanState extends State<Laporan> {
           ),
         ));
   }
-
-  Widget PerView(Widget child) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(50),
-        child: child,
-      ),
-    );
-  }
 }

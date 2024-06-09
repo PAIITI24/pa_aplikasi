@@ -25,7 +25,7 @@ class _ubahStokObatViewState extends State<ubahStokObatView> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const Sidebar(),
-      appBar: TopBar(context, title: "Mengubah jumlah stok"),
+      appBar: TopBar(context, title: "Menambah stok"),
       body: Center(
         child: BoxWithMaxWidth(
           maxWidth: 1000,
@@ -36,7 +36,7 @@ class _ubahStokObatViewState extends State<ubahStokObatView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const H1("Mengubah jumlah stok"),
+                  const H1("Menambah stok"),
                   Padding(
                     padding: const EdgeInsets.all(25),
                     child: Column(
@@ -45,7 +45,7 @@ class _ubahStokObatViewState extends State<ubahStokObatView> {
                           controller: _jumlahStokController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
-                            labelText: 'Jumlah tambah/kurang',
+                            labelText: 'Jumlah tambah',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -75,13 +75,6 @@ class _ubahStokObatViewState extends State<ubahStokObatView> {
                             ),
                             const SizedBox(width: 16.0),
                             ElevatedButton(
-                              onPressed: () async {
-                                await _reduce();
-                              },
-                              child: const Text('Kurang'),
-                            ),
-                            const SizedBox(width: 16.0),
-                            ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
@@ -99,60 +92,6 @@ class _ubahStokObatViewState extends State<ubahStokObatView> {
         ),
       ),
     );
-  }
-
-  Future<void> _reduce() async {
-    var result =
-        await kurangiStokObat(this.id, int.parse(_jumlahStokController.text));
-
-    switch (result) {
-      case 1:
-        Navigator.of(context).pop("boombaclat");
-        break;
-      case 3:
-        showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              content: const Text(
-                  "Anda tidak bisa memasukkan lebih dari apa yang ada"),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop(); // Close the failure dialog
-                  },
-                  child: const Text('OK'),
-                )
-              ],
-            );
-          },
-        );
-        break;
-      default:
-        showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              content: const Text("Gagal mengurangi stok obat"),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop(); // Close the failure dialog
-                  },
-                  child: const Text('OK'),
-                )
-              ],
-            );
-          },
-        );
-        break;
-    }
   }
 
   Future<void> _add() async {

@@ -20,7 +20,6 @@ class ManagementCreateObat extends StatefulWidget {
 
 class _ManagementCreateObatState extends State<ManagementCreateObat> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _jumlahController = TextEditingController();
   final TextEditingController _dosisController = TextEditingController();
   final TextEditingController _bentukSediaanController =
       TextEditingController();
@@ -119,15 +118,7 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    TextField(
-                      controller: _jumlahController,
-                      decoration: const InputDecoration(
-                        labelText: 'Jumlah',
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(height: 16.0),
+
                     TextField(
                       controller: _dosisController,
                       decoration: const InputDecoration(
@@ -310,7 +301,6 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
 
   Future<void> _inputData() async {
     final name = _nameController.text;
-    final jumlah = _jumlahController.text;
     final dosis = _dosisController.text;
     final bentukSediaan = _bentukSediaanController.text;
     final harga = _hargaController.text;
@@ -389,7 +379,6 @@ class _ManagementCreateObatState extends State<ManagementCreateObat> {
 
     bool success = await createObatData(
       name,
-      int.parse(jumlah),
       dosis,
       bentukSediaan,
       hargaC,

@@ -36,11 +36,12 @@ Future<bool> tambahStokBarang(
   }
 }
 
-Future<int> kurangiStokBarang(int barangId, int quantity) async {
+Future<int> kurangiStokBarang(
+    int barangId, int stokMasukId, int quantity) async {
   var url = Uri.parse("${URLAplikasi.API}/barang/stok/reduce");
   try {
-    var payload =
-        jsonEncode(StokBarangRedReq(barangId: barangId, amount: quantity));
+    var payload = jsonEncode(StokBarangRedReq(
+        barangId: barangId, amount: quantity, stokMasukId: stokMasukId));
     var response = await http.put(
       url,
       headers: <String, String>{
@@ -59,5 +60,53 @@ Future<int> kurangiStokBarang(int barangId, int quantity) async {
     }
   } catch (_) {
     return 2;
+  }
+}
+
+Future<List<StokMasukBarang>?> fetchLaporanMasukStokBarangPerId(int id) async {
+  try {
+    var fetchData = await http.get(
+        Uri.parse("${URLAplikasi.API}/barang/stok/add/history/${id}"),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': await AuthKey().Get()
+        });
+
+    if (fetchData.statusCode == 200) {
+      List<dynamic> data = jsonDecode(fetchData.body);
+      List<StokMasukBarang> compiledData =
+          data.map((x) => StokMasukBarang.fromJson(x)).toList();
+
+      return compiledData;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    print("Exception $e");
+    return null;
+  }
+}
+
+Future<List<StokKeluarBarang>?> fetchLaporanKeluarStokBarangPerId(
+    int id) async {
+  try {
+    var fetchData = await http.get(
+      Uri.parse("${URLAplikasi.API}/barang/stok/reduce/history/${id}"),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': await AuthKey().Get()
+      },
+    );
+
+    if (fetchData.statusCode == 200) {
+      List<dynamic> data = jsonDecode(fetchData.body);
+      return data.map((x) => StokKeluarBarang.fromJson(x)).toList();
+    } else {
+      print("Error: ${fetchData.statusCode}");
+      return null;
+    }
+  } catch (e) {
+    print("Exception: $e");
+    return null;
   }
 }

@@ -19,7 +19,6 @@ class ManagementCreateBarang extends StatefulWidget {
 
 class _ManagementCreateBarangState extends State<ManagementCreateBarang> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _jumlahController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
 //  final TextEditingController _expiredController = TextEditingController();
@@ -115,15 +114,6 @@ class _ManagementCreateBarangState extends State<ManagementCreateBarang> {
                         labelText: 'Nama barang',
                         border: OutlineInputBorder(),
                       ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextField(
-                      controller: _jumlahController,
-                      decoration: const InputDecoration(
-                        labelText: 'Jumlah',
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 16.0),
                     TextField(
@@ -301,7 +291,6 @@ class _ManagementCreateBarangState extends State<ManagementCreateBarang> {
 
   Future<void> _inputData() async {
     final name = _nameController.text;
-    final jumlah = _jumlahController.text;
     final deskripsi = _deskripsiController.text;
     final harga = double.parse(_hargaController.text);
 
@@ -347,7 +336,6 @@ class _ManagementCreateBarangState extends State<ManagementCreateBarang> {
 
     bool success = await createBarangData(
       name,
-      int.parse(jumlah),
       deskripsi,
       harga,
       selectedCategoryIds,

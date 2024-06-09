@@ -6,8 +6,8 @@ import 'package:aplikasi/functions/shared/securestorage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-Future<bool> createBarangData(String namaBarang, int jumlah, String deskripsi,
-    double harga, List<int?> idKategoriBarang, File imageFile) async {
+Future<bool> createBarangData(String namaBarang, String deskripsi, double harga,
+    List<int?> idKategoriBarang, File imageFile) async {
   final url = "${URLAplikasi.API}/barang/"; // Replace with your API endpoint
 
   final request = http.MultipartRequest('POST', Uri.parse(url));
@@ -17,12 +17,9 @@ Future<bool> createBarangData(String namaBarang, int jumlah, String deskripsi,
   // Add your JSON data
   request.fields["data"] = jsonEncode({
     "kategori_barang": idKategoriBarang,
-    "data_barang": Barang(
-            namaBarang: namaBarang,
-            deskripsi: deskripsi,
-            jumlahStok: jumlah,
-            harga: harga)
-        .toJson()
+    "data_barang":
+        Barang(namaBarang: namaBarang, deskripsi: deskripsi, harga: harga)
+            .toJson()
   });
 
   // Add the image file

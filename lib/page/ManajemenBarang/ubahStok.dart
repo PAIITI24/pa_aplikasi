@@ -76,13 +76,6 @@ class _ubahStokBarangViewState extends State<ubahStokBarangView> {
                             ),
                             const SizedBox(width: 16.0),
                             ElevatedButton(
-                              onPressed: () async {
-                                await _reduce();
-                              },
-                              child: const Text('Kurang'),
-                            ),
-                            const SizedBox(width: 16.0),
-                            ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
@@ -100,60 +93,6 @@ class _ubahStokBarangViewState extends State<ubahStokBarangView> {
         ),
       ),
     );
-  }
-
-  Future<void> _reduce() async {
-    var result =
-        await kurangiStokBarang(this.id, int.parse(_jumlahStokController.text));
-
-    switch (result) {
-      case 1:
-        Navigator.of(context).pop("boombaclat");
-        break;
-      case 3:
-        showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              content: const Text(
-                  "Anda tidak bisa memasukkan lebih dari apa yang ada"),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop(); // Close the failure dialog
-                  },
-                  child: const Text('OK'),
-                )
-              ],
-            );
-          },
-        );
-        break;
-      default:
-        showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              content: const Text("Gagal mengurangi stok obat"),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop(); // Close the failure dialog
-                  },
-                  child: const Text('OK'),
-                )
-              ],
-            );
-          },
-        );
-        break;
-    }
   }
 
   Future<void> _add() async {
