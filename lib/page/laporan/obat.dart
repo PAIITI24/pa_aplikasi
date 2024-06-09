@@ -1,12 +1,10 @@
 import 'package:aplikasi/functions/data/models/laporan.dart';
 import 'package:aplikasi/functions/data/models/obat.dart';
 import 'package:aplikasi/functions/laporan/obat.dart';
-import 'package:aplikasi/functions/obat/laporan/printObat.dart';
+import 'package:aplikasi/functions/obat/laporan/print.dart';
 import 'package:aplikasi/functions/obat/list.dart';
 import 'package:aplikasi/page/component/titles.dart';
-import 'package:aplikasi/page/laporan.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 enum Mode { all, masukonly, keluaronly }

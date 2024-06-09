@@ -11,25 +11,25 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-pw.Widget PDFTemplateBarang(List<StokMasukBarang>? obatMasuk,
+pw.Widget pdfTemplateBarang(List<StokMasukBarang>? obatMasuk,
     List<StokKeluarBarang>? obatKeluar, List<Obat>? stok) {
   if (obatMasuk != null && obatKeluar != null && stok != null) {
     DateFormat dtf = DateFormat("dd MMMM yyyy");
 
     var totalStok = 0;
-    stok!.forEach((x) {
+    for (var x in stok) {
       totalStok += x.jumlahStok!;
-    });
+    }
 
     var totalMasuk = 0;
-    obatMasuk.forEach((x) {
+    for (var x in obatMasuk) {
       totalMasuk += x.stokMasuk!;
-    });
+    }
 
     var totalKeluar = 0;
-    obatKeluar.forEach((x) {
+    for (var x in obatKeluar) {
       totalKeluar += x.stokKeluar!;
-    });
+    }
 
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.stretch,
@@ -41,26 +41,27 @@ pw.Widget PDFTemplateBarang(List<StokMasukBarang>? obatMasuk,
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
           children: [
-            summaryItem("Total Stok", "${totalStok}"),
-            summaryItem("Stok Obat Masuk", "${totalMasuk}"),
-            summaryItem("Stok Obat Keluar", "${totalKeluar}"),
+            summaryItem("Total Stok", "$totalStok"),
+            summaryItem("Stok Obat Masuk", "$totalMasuk"),
+            summaryItem("Stok Obat Keluar", "$totalKeluar"),
           ],
         ),
         pw.Text('Tabel Data Masuk', style: const pw.TextStyle(fontSize: 18)),
         pw.SizedBox(height: 10),
         // Add the table here
+        // ignore: deprecated_member_use
         pw.Table.fromTextArray(
           headers: ['Item Masuk', 'Tanggal Masuk', 'Jumlah Masuk'],
-          data: obatMasuk!.map((el) {
+          data: obatMasuk.map((el) {
             return [
               '${el.barang!.namaBarang}',
-              '${dtf.format(el.createdAt!)}',
+              (dtf.format(el.createdAt!)),
               '${el.stokMasuk}'
             ];
           }).toList(),
           headerStyle:
               pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
-          cellStyle: pw.TextStyle(fontSize: 10),
+          cellStyle: const pw.TextStyle(fontSize: 10),
           cellAlignment: pw.Alignment.centerLeft,
           headerDecoration: const pw.BoxDecoration(
             color: PdfColors.grey300,
@@ -75,10 +76,10 @@ pw.Widget PDFTemplateBarang(List<StokMasukBarang>? obatMasuk,
         pw.SizedBox(height: 10),
         pw.Table.fromTextArray(
           headers: ['Item Masuk', 'Tanggal Masuk', 'Jumlah Masuk'],
-          data: obatKeluar!.map((el) {
+          data: obatKeluar.map((el) {
             return [
               '${el.barang!.namaBarang}',
-              '${dtf.format(el.createdAt!)}',
+              (dtf.format(el.createdAt!)),
               '${el.stokKeluar}'
             ];
           }).toList(),
@@ -114,7 +115,7 @@ Future<void> printReportBarang(BuildContext context) async {
       pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {
         return [
-          PDFTemplateBarang(stokBarangMasuk, stokBarangKeluar, daftarStok)
+          pdfTemplateBarang(stokBarangMasuk, stokBarangKeluar, daftarStok)
         ];
       },
     ),
